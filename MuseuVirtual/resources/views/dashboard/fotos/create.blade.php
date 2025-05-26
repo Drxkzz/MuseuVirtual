@@ -133,7 +133,9 @@
                             class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-3">
                             <option value="">Escolha um Mineral...</option>
                             @foreach ($minerais as $mineral)
-                                <option value="{{ $mineral->id }}">{{ $mineral->nome }}</option>
+                                <option value="{{ $mineral->id }}" {{ request('idMineral') == $mineral->id ? 'selected' : '' }}>
+                                    {{ $mineral->nome }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
