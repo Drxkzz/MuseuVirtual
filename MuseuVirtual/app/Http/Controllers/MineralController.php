@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Mineral;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
+use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
 class MineralController extends Controller
 {
     /**
@@ -70,10 +72,19 @@ class MineralController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($mineral)
     {
-        $mineral = Mineral::findOrFail($id);
+        $mineral = Mineral::findOrFail($mineral);  // Buscar o mineral, antes de alterar os dados
+        foreach ($mineral->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+
+        }
+        
         $mineral->delete();
-        return redirect('/minerais/');
+        $minerais = Mineral::paginate(10);  // 10 rochas por página
+
+        return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }
+
+
 }

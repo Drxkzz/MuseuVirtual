@@ -104,8 +104,15 @@ class JazidaController extends Controller
      */
     public function destroy(Jazida $jazida)
     {
+        foreach ($jazida->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+
+        }
+        
         $jazida->delete();
-        return redirect()->route('jazidas.index')->with('success', 'Jazida excluída com sucesso!');
+        $jazidas = Jazida::paginate(10);  // 10 rochas por página
+
+        return redirect()->route('jazidas.index', 'jazidas')->with('success', 'Jazida deletada com sucesso!');
     }
 
 }
