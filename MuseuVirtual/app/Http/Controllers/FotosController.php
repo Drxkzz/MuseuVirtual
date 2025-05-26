@@ -106,9 +106,10 @@ class FotosController extends Controller
     public function update(Request $request, $id)
     {
         $foto = Fotos::findOrFail($id);
-
         // Atualiza campo de capa
-        $capa = $request->has('capa') ? 1 : 0;
+
+        $capa = $request->capa != null && $request->capa != "0" ? 1 : 0;
+
         if ($capa) {
             // Remove marcação de outras capas
             Fotos::where('capa', 1)->update(['capa' => 0]);
