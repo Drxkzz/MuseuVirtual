@@ -21,24 +21,8 @@
                         class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:bg-gray-100 file:border-0 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:text-gray-700 file:cursor-pointer hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 dark:hover:file:bg-gray-600" />
                 </div>
 
-                <div>
-                    <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Usar foto como
-                        capa?</span>
-                    <div class="flex items-center space-x-4">
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="capa" value="1" id="capaa"
-                                class="text-blue-600" {{ $fotos->capa == 1 ? 'checked' : ''}}>
-                            <span class="text-gray-700 dark:text-gray-300">Sim</span>
-                        </label>
-                        <label class="flex items-center space-x-2">
-                            <input type="radio" name="capa" value="0" id="capaa" class="text-blue-600"
-                                {{ $fotos->capa == 1 ? '' : 'checked'}}>
-                            <span class="text-gray-700 dark:text-gray-300">Não</span>
-                        </label>
-                    </div>
-                </div>
-
                 
+                                
                 <!-- Área onde os cards de fotos serão exibidos -->
                 <div class="mt-4 grid grid-cols-3 gap-4" id="cardsFotos">
                     <!-- Cards serão gerados aqui via JS -->
@@ -47,9 +31,7 @@
                 <script>
                     function atualizarCardCapa(input) {
                         const container = document.getElementById('cardsFotos');
-                        const capaInput = document.getElementById('capa_nome');
-                        container.innerHTML = '';
-                        capaInput.value = ''; // limpa valor anterior
+                        container.innerHTML = ''; // Limpa o conteúdo anterior
 
                         const arquivo = input.files[0];
                         if (!arquivo) return;
@@ -63,17 +45,14 @@
                         card.appendChild(img);
 
                         const capaIndicator = document.createElement('div');
-                        capaIndicator.classList.add('capa-indicator', 'hidden'); // começa escondido
+                        capaIndicator.classList.add('capa-indicator', 'hidden'); // Começa escondido
                         capaIndicator.textContent = 'Capa';
                         card.appendChild(capaIndicator);
-                        radio - documenct.getElementById('capaa')
 
-
-                        // Não marca automaticamente como capa
                         container.appendChild(card);
                     }
-
                 </script>
+
 
                 <style>
                     .card {
@@ -130,6 +109,23 @@
                     }
                 </style>
 
+                <div>
+                    <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Usar foto como
+                        capa?</span>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="capa" value="1" id="capaa"
+                                class="text-blue-600" {{ $fotos->capa == 1 ? 'checked' : ''}}>
+                            <span class="text-gray-700 dark:text-gray-300">Sim</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="capa" value="0" id="capaa" class="text-blue-600"
+                                {{ $fotos->capa == 1 ? '' : 'checked'}}>
+                            <span class="text-gray-700 dark:text-gray-300">Não</span>
+                        </label>
+                    </div>
+                </div>
+                <br>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ID da Rocha:</label>
