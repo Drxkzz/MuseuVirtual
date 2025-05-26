@@ -70,12 +70,17 @@
                         <h2 class="self-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                             {{ __('Fotos da rocha') }}
                         </h2>
+                        
+                        <a href="{{ route('fotos-create', ['idRocha' =>$rocha->id]) }}" class="bg-[#9B9FB5] inline-block self-end text-black px-4 bg-blue-600 rounded hover:bg-blue-700">
+                            Adicionar fotos
+                        </a>
+
                     </div>
                     <div class='flex flex-wrap border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm'>
                         @if ($rocha->fotos->isEmpty())
-                            <p>
-                                Não existem imagens cadastradas para esta rocha
-                            </p>
+                            <br>
+                            <p>Não existem imagens cadastradas para esta rocha</p>
+                            <br>
                         @else
                             @php
                                 $fotos = $rocha->fotos;

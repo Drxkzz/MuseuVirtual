@@ -28,8 +28,9 @@ class FotosController extends Controller
         $rochas = Rocha::all();
         $minerais = Mineral::all();
         $jazidas = Jazida::all();
-        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas'));
+        $idRocha = request('idRocha'); // captura o valor da query string
 
+        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas', 'idRocha'));
     }
 
 
