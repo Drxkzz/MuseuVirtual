@@ -64,7 +64,7 @@ class MineralController extends Controller
      */
     public function edit($id)
     {
-        $mineral = Mineral::findOrFail($id);
+        $mineral = Mineral::with('fotos')->findOrFail($id);
         return view('dashboard.minerais.edit', compact('mineral'));
     }
     
@@ -72,14 +72,31 @@ class MineralController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Mineral $mineral)
     {
-        $mineral = Mineral::findOrFail($id);  // Buscar o mineral, antes de alterar os dados
-        $mineral -> nome = $request -> nome;
-        $mineral -> descricao = $request -> descricao;
-        $mineral -> propriedades = $request -> propriedades;
-        $mineral -> save();
-        return redirect('/minerais/');
+        $request->validate([
+            'nome' => 'sometimes|required|string|max:255',
+            'descricao' => 'nullable|string',
+            'composicao' => 'nullable|string',
+            'tipo' => 'required|integer',
+        ]);
+
+        // Atualizando apenas os campos que foram enviados
+        if ($request->filled('nome')) {
+            $mineral->nome = $request->nome;
+        }
+
+        if ($request->filled('descricao')) {
+            $mineral->descricao = $request->descricao;
+        }
+
+        if ($request->filled('propriedades')) {
+            $mineral->composicao = $request->composicao;
+        }
+
+        $mineral->save();
+
+        return redirect()->route('Mineral.index')->with('success', 'Mineral atualizado com sucesso!');
     }
 
     /**
