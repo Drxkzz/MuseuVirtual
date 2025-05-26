@@ -136,6 +136,8 @@ class RochaController extends Controller
     }
 
     public function site(){
-        return view('rochas');
+        $rochas = Rocha::with("fotos")->get();
+        // dd($rochas);
+        return view('rochas',compact("rochas"));
     }
 }
