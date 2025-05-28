@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import InputLabel from '@/Components/InputLabel.vue'
@@ -19,12 +19,27 @@ const form = useForm({
 function submit() {
     form.put(route('jazidas.update', props.jazida.id))
 }
+
+onMounted(()=>{
+    console.log(props.jazida)
+})
 </script>
 
 <template>
 
     <Head title="Jazidas " />
     <AuthenticatedLayout>
+        <template #header>
+            <div class="flex justify-between">
+                <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                    Editar Jazida
+                </h2>
+                <a :href="route('jazidas.index')"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Voltar
+                </a>
+            </div>
+        </template>
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -46,9 +61,9 @@ function submit() {
                                 <textarea id="descricao" v-model="form.descricao" rows="4" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 
                                dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 
                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-              </textarea>
+                        </textarea>
                                 <span v-if="form.errors.descricao" class="text-red-500 text-sm">{{ form.errors.descricao
-                                    }}</span>
+                                }}</span>
                             </div>
 
                             <div class="flex items-center justify-end mt-6">
