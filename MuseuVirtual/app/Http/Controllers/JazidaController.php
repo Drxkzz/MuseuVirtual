@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fotos;
 use App\Models\Jazida;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JazidaController extends Controller
 {
@@ -13,8 +14,9 @@ class JazidaController extends Controller
      */
     public function index()
     {
-        $jazidas = Jazida::get();
-        return view('dashboard.jazidas.index', compact('jazidas'));
+        $jazidas = Jazida::with('fotos')->get();
+        # return view('dashboard.jazidas.index', compact('jazidas'));
+        return Inertia::render('Dashboard/Jazidas/Index',['jazidas'=>$jazidas]);
     }
 
     /**
@@ -67,7 +69,9 @@ class JazidaController extends Controller
      */
     public function edit(Jazida $jazida)
     {
-        return view('dashboard.jazidas.edit', compact('jazida'));
+        $jazida = $jazida::with('fotos')->first();
+       # return view('dashboard.jazidas.edit', compact('jazida'));
+       return Inertia::render('Dashboard/Jazidas/Edit',['jazida'=>$jazida]);
     }
 
     /**
