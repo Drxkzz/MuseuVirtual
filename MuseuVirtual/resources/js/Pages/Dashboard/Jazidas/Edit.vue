@@ -44,9 +44,9 @@ function submit() {
                             <div class="mb-4">
                                 <InputLabel for="descricao" value="Descrição" />
                                 <textarea id="descricao" v-model="form.descricao" rows="4" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 
-                               dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 
-                               focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-              </textarea>
+                                dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 
+                                focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                </textarea>
                                 <span v-if="form.errors.descricao" class="text-red-500 text-sm">{{ form.errors.descricao
                                     }}</span>
                             </div>
