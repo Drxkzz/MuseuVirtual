@@ -9,7 +9,7 @@
             @vite(['resources/css/app.css', 'resources/js/app.js'])
         @endif
 </head>
-<body class="bg-[#363C27]">
+<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
     <x-menu_site/>
     
     <h1 class="font-[Arial] text-[50px] ms-80 text-[#F1EEDD] pb-6 pt-16"><strong>Jazidas</strong></h1>
