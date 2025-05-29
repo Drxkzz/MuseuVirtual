@@ -87,7 +87,7 @@ class JazidaController extends Controller
     }
 
     public function site(){
-        return view("Jazidas");
+        return view("jazidas");
     }
 
 }

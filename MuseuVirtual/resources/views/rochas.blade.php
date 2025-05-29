@@ -18,68 +18,72 @@
         <img class= "pb-40 w-full object-cover" src="/assets/img/image (3).png" alt="Foto da rocha tal">
     </div>
 
-    <div class="grid grid-cols-2 gap-8 ">
+     <div class="grid grid-cols-2 gap-8 ">
         <figure class="pl-80 w-full">
             <img class="object-cover" src="/assets/img/image (2).png" alt="Imagem da rocha tal">
-            <div class="flex">
-                <div class="flex">
-                    <img class="" src="/assets/img/Vector.png" alt="curtir">
-                    <img class="" src="/assets/img/Vector (1).png" alt="salvar">
-                </div>
-                <figcaption>
-                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
-                </figcaption>
-
+            <div class="flex justify-between items-center p-4 text-white">
+            <span class="font-[Arial] text-[30px] text-[#F1EEDD] font-bold">Rocha tal</span>
+            <div class="flex space-x-4">
+                <i class="text-2xl flex gap-2 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                   <img class="" src="/assets/img/Vector.png" alt="curtir">
+                   <img class="" src="/assets/img/Vector (1).png" alt="salvar">
+                </i>
+                <i class="fa-solid fa-download text-2xl cursor-pointer hover:text-gray-300 transition-colors duration-200"></i>
             </div>
         </figure>
         <figure class= "pb-20 w-full ">
             <img class="object-cover" src="/assets/img/image (2).png" alt="Imagem da rocha tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
-            </figcaption>
+            <div class="flex justify-between items-center p-4 text-white">
+            <span class="font-[Arial] text-[30px] text-[#F1EEDD] font-bold">Rocha tal</span>
+            <div class="flex space-x-4">
+                <i class="text-2xl flex gap-2 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                   <img class="" src="/assets/img/Vector.png" alt="curtir">
+                   <img class="" src="/assets/img/Vector (1).png" alt="salvar">
+                </i>
+                <i class="fa-solid fa-download text-2xl cursor-pointer hover:text-gray-300 transition-colors duration-200"></i>
+            </div>
         </figure>
     </div>
 
     <figure class="pl-80 pb-20 w-[82%]">
             <img src="/assets/img/image (3).png" alt="Imagem da rocha tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
-            </figcaption>
+            <div class="flex justify-between items-center p-4 text-white">
+            <span class="font-[Arial] text-[30px] text-[#F1EEDD] font-bold">Rocha tal</span>
+            <div class="flex space-x-4">
+                <i class="text-2xl flex gap-2 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                   <img class="" src="/assets/img/Vector.png" alt="curtir">
+                   <img class="" src="/assets/img/Vector (1).png" alt="salvar">
+                </i>
+                <i class="fa-solid fa-download text-2xl cursor-pointer hover:text-gray-300 transition-colors duration-200"></i>
+            </div>
         </figure>
     
     <div class="grid grid-cols-2 gap-8">
         <figure class="pl-80 ">
             <img src="/assets/img/image (2).png" alt="Imagem da rocha tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
-            </figcaption>
+            <div class="flex justify-between items-center p-4 text-white">
+            <span class="font-[Arial] text-[30px] text-[#F1EEDD] font-bold">Rocha tal</span>
+            <div class="flex space-x-4">
+                <i class="text-2xl flex gap-2 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                   <img class="" src="/assets/img/Vector.png" alt="curtir">
+                   <img class="" src="/assets/img/Vector (1).png" alt="salvar">
+                </i>
+                <i class="fa-solid fa-download text-2xl cursor-pointer hover:text-gray-300 transition-colors duration-200"></i>
+            </div>
         </figure>
-        <figure class="pl-2 pb-40">
+        <figure class="pl-2 pb-20">
             <img src="/assets/img/image (2).png" alt="Imagem da rocha tal">
-            <figcaption>
-                <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
-            </figcaption>
+            <div class="flex justify-between items-center p-4 text-white">
+            <span class="font-[Arial] text-[30px] text-[#F1EEDD] font-bold">Rocha tal</span>
+            <div class="flex space-x-4 ">
+                <i class="text-2xl flex gap-2 cursor-pointer hover:text-gray-300 transition-colors duration-200">
+                   <img class="" src="/assets/img/Vector.png" alt="curtir">
+                   <img class="" src="/assets/img/Vector (1).png" alt="salvar">
+                </i>
+                <i class="fa-solid fa-download text-2xl cursor-pointer hover:text-gray-300 transition-colors duration-200"></i>
+            </div>
         </figure>
     </div>
-
-    
-    <div style="text-align: center;">
-        <footer>
-        <h3>Entre com sua conta no Museu Virtual</h3>
-        <form class="formulario" action="" action="get">
-            <input type="text" id="login" name="login" placeholder="Login">
-            <br>
-            <input type="text" id="Senha" name="Senha" placeholder="Senha">
-            <br>
-            <input type="button" value="Entrar">
-            <br>
-            <a href="">Ainda não se cadastrou? Cadastre-se aqui</a>
-        </form>
-        <img class="imagem_final" src="" alt="">
-        <img class="imagem_final" src="" alt="">
-    </footer>
-    </div>
-    
+    <x-rodape_site></x-rodape_site>
 </body>
-
 </html>
