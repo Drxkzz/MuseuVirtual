@@ -12,7 +12,8 @@ class RochaController extends Controller
      */
     public function index()
     {
-        $rochas = Rocha::paginate(10);  // 10 rochas por página
+        $rochas = Rocha::with('fotos')->paginate(10);  // 10 rochas por página
+        // dd(vars: $rochas);
         return view('dashboard.rocha.index', compact('rochas'));
     }
 
@@ -28,6 +29,7 @@ class RochaController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request){
+        
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'descricao' => 'required|string',
@@ -35,7 +37,23 @@ class RochaController extends Controller
             'tipo' => 'required|integer',
         ]);
 
-        Rocha::create($validated);
+
+        // Começa aqui a parte de encaminhar para o fotos controller ----------------------------
+        $rocha = Rocha::create($validated);
+        
+        if ($request->hasFile('foto')) {
+            $fotosRequest = new Request([
+                "idRocha" => $rocha->id,
+                "capa_nome" => $request->input('capa_nome'),
+            ]);
+
+            // Encaminha os arquivos
+            $fotosRequest->files->set('foto', $request->file('foto'));
+
+            // Chama o controller de fotos
+            app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
+        }
+        // termina aqui ---------------------------------------------------------------------
 
         return redirect()->route('Rocha.index')->with('success', 'Rocha criada com sucesso!');
     }
@@ -55,7 +73,7 @@ class RochaController extends Controller
     public function edit($id)
     {
 
-        $rocha = Rocha::findOrFail($id);
+        $rocha = Rocha::with('fotos')->findOrFail($id);
 
         return view('dashboard.rocha.edit', compact('rocha'));
     }
@@ -100,8 +118,13 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        $rocha->delete();
+        dd($rocha);
+        foreach ($rocha->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+
+        }
         
+        $rocha->delete();
         $rochas = Rocha::paginate(10);  // 10 rochas por página
 
         return redirect()->route('Rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
@@ -113,6 +136,11 @@ class RochaController extends Controller
     }
 
     public function site(){
-        return view('rochas');
+        $rochastipo1 = Rocha::where("tipo",1)->with("fotos")->get();
+        $rochastipo2 = Rocha::where("tipo",2)->with("fotos")->get();
+        $rochastipo3 = Rocha::where("tipo",3)->with("fotos")->get();
+        // dd($rochas);
+        return view('rochas',compact("rochastipo1","rochastipo2","rochastipo3"));
+
     }
 }

@@ -17,7 +17,7 @@
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
     <br>
-    <p class="text-center"><a href="#" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] text-[#565851]">Login</a></p>
+    <p class="text-center"><a href="#" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851]">Login</a></p>
     <figure class="w-100 mt-20">
         <img class="w-full" src="/assets/img/image 1.png" alt="Imagem de uma jazida ">
     </figure>
@@ -35,32 +35,32 @@
     <div class="flex justify-center mt-10">
         <div class="w-[1200px]">
             <div class="grid grid-cols-2 grid-rows-2  gap-x-8 gap-y-4 justify-items-center items-center">
-                <figure class="">
-                    <img src="/assets/img/JazidaInicial.png" alt="">
+                <figure>
+                    <a href="#"><img class="cursor-pointer" src="/assets/img/JazidaInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Jazidas</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de jazidas.</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="">
-                    <img src="/assets/img/RochaInicial.png" alt="">
+                <figure>
+                    <a href="#"><img class="cursor-pointer" src="/assets/img/RochaInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Rochas</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de rochas.</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="">
-                    <img src="/assets/img/MineraisInicial.png" alt="">
+                <figure>
+                    <a href="#"><img class="cursor-pointer" src="/assets/img/MineraisInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Minerais</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">Confira aqui nosso acervo de minerais.</h3>
                     </figcaption>
                 </figure>
 
-                <figure class="">
-                    <img src="/assets/img/CatalogoInicial.png" alt="">
+                <figure>
+                    <a href="#"><img class="cursor-pointer" src="/assets/img/CatalogoInicial.png" alt=""></a>
                     <figcaption>
                         <h2 class="font-[arial] font-bold text-[40px] text-[#F1EEDD]">Catálogo</h2>
                         <h3 class="font-[arial] text-[20px] text-[#F1EEDD]">O catálogo é uma coleção organizada de
