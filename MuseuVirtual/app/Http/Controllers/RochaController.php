@@ -118,7 +118,6 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        dd($rocha);
         foreach ($rocha->fotos as $foto) {
             app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
 

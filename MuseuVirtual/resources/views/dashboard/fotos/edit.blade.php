@@ -21,7 +21,24 @@
                         class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:bg-gray-100 file:border-0 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:text-gray-700 file:cursor-pointer hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 dark:hover:file:bg-gray-600" />
                 </div>
 
-                <input type="hidden" name="capa" id="capa_nome" />
+                <div>
+                    <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Usar foto como
+                        capa?</span>
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="capa" value="1" id="capaa"
+                                class="text-blue-600" {{ $fotos->capa == 1 ? 'checked' : ''}}>
+                            <span class="text-gray-700 dark:text-gray-300">Sim</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="capa" value="0" id="capaa" class="text-blue-600"
+                                {{ $fotos->capa == 1 ? '' : 'checked'}}>
+                            <span class="text-gray-700 dark:text-gray-300">Não</span>
+                        </label>
+                    </div>
+                </div>
+
+                
                 <!-- Área onde os cards de fotos serão exibidos -->
                 <div class="mt-4 grid grid-cols-3 gap-4" id="cardsFotos">
                     <!-- Cards serão gerados aqui via JS -->
@@ -49,30 +66,8 @@
                         capaIndicator.classList.add('capa-indicator', 'hidden'); // começa escondido
                         capaIndicator.textContent = 'Capa';
                         card.appendChild(capaIndicator);
+                        radio - documenct.getElementById('capaa')
 
-                        card.addEventListener('click', () => {
-                            const isSelected = card.classList.contains('selected');
-
-                            if (isSelected) {
-                                // Desmarca
-                                card.classList.remove('selected');
-                                capaIndicator.classList.add('hidden');
-                                capaInput.value = '';
-                            } else {
-                                // Remove seleção de outros cards
-                                const allCards = document.querySelectorAll('.card');
-                                allCards.forEach(c => {
-                                    c.classList.remove('selected');
-                                    const indicator = c.querySelector('.capa-indicator');
-                                    if (indicator) indicator.classList.add('hidden');
-                                });
-
-                                // Marca este
-                                card.classList.add('selected');
-                                capaIndicator.classList.remove('hidden');
-                                capaInput.value = arquivo.name;
-                            }
-                        });
 
                         // Não marca automaticamente como capa
                         container.appendChild(card);
