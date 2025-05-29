@@ -1,6 +1,6 @@
 <header>
     <br>
-    <nav class="rounded-full bg-[#F1EEDD] ml-80 mr-80 font-bold">
+    <nav class="rounded-full bg-[#F1EEDD]  font-bold w-full">
         <ul class="flex justify-center font-[arial] pt-3 pb-3">
             <li><a href="#" class="p-5 pr-40 text-[#565851]">Museu Virtual ES</a></li>
             <li><a href="{{route('site.jazidas')}}" class="p-5 text-[#565851]">JAZIDAS</a></li>
