@@ -170,6 +170,30 @@ const showingNavigationDropdown = ref(false);
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('rochas.index')"
+                            :active="route().current('rochas.*')"
+                        >
+                            Rochas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('jazidas.index')"
+                            :active="route().current('jazidas.*')"
+                        >
+                            Jazidas
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('fotos-index')"
+                            :active="route().current('fotos-*')"
+                        >
+                            Fotos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('minerais.index')"
+                            :active="route().current('minerais.*')"
+                        >
+                            Minerais 
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
