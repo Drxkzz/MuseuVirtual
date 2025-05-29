@@ -87,7 +87,8 @@ class JazidaController extends Controller
     }
 
     public function site(){
-        return view("Jazidas");
+        $jazidas = Jazida::with("fotos")->get();
+        return view('Jazidas',compact("jazidas"));
     }
 
 }
