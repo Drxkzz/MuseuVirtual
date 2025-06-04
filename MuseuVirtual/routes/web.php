@@ -39,9 +39,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 Route::resource('rochas', RochaController::class)->names('Rocha');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
