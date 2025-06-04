@@ -3,6 +3,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref, reactive } from 'vue';
 
+import QuillEditor from '@/Components/QuillEditor.vue';
+
 const form = reactive({
     nome: '',
     descricao: '',
@@ -48,6 +50,7 @@ function submitForm() {
 </script>
 
 <template>
+
     <Head title="Criar Rocha" />
 
     <AuthenticatedLayout>
@@ -71,8 +74,8 @@ function submitForm() {
 
                             <div class="mb-4">
                                 <label for="descricao" class="block font-medium">Descrição</label>
-                                <input id="descricao" v-model="form.descricao" type="text" required
-                                    class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
+                                <QuillEditor id="descricao" v-model="form.descricao"
+                                    class="mt-1 block w-full border border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
                             </div>
 
                             <div class="mb-4">
