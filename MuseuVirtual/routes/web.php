@@ -19,10 +19,11 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get("/",[SiteController::class,'home']);
-Route::get("/site/jazidas", [JazidaController::class, 'site']);
+Route::get("/",[SiteController::class,'home'])->name("home");
+Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
+Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 
-Route::get("/site/rochas", [RochaController::class, 'site']);
+Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class,'apiListRocha']);
 
 Route::get('/dashboard', function () {

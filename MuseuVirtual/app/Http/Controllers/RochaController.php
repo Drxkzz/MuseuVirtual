@@ -142,6 +142,11 @@ class RochaController extends Controller
     }
 
     public function site(){
-        return view('rochas');
+        $rochastipo1 = Rocha::where("tipo",1)->with("fotos")->get();
+        $rochastipo2 = Rocha::where("tipo",2)->with("fotos")->get();
+        $rochastipo3 = Rocha::where("tipo",3)->with("fotos")->get();
+        // dd($rochas);
+        return view('rochas',compact("rochastipo1","rochastipo2","rochastipo3"));
+
     }
 }

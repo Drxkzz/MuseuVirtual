@@ -82,9 +82,9 @@ function submitDeleteFoto(id) {
                             <h2 class="self-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                                 Fotos do Mineral:
                             </h2>
-
-                            <a :href="route('fotos-create', { idMineral: mineral.id })" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
-                                Adicionar fotos
+                            <a :href="route('fotos-create', { idMineral: mineral.id })"
+                                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
+                                Adicionar Fotos
                             </a>
                         </div>
 

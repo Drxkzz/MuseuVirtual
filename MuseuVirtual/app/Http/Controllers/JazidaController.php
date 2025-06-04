@@ -24,7 +24,8 @@ class JazidaController extends Controller
      */
     public function create()
     {
-        return view('dashboard.jazidas.create');
+        # return view('dashboard.jazidas.create');
+        return Inertia::render('Dashboard/Jazidas/Create');
     }
 
     /**
@@ -69,7 +70,7 @@ class JazidaController extends Controller
      */
     public function edit(Jazida $jazida)
     {
-        $jazida = $jazida::with('fotos')->first();
+        $jazida->load('fotos');
        # return view('dashboard.jazidas.edit', compact('jazida'));
        return Inertia::render('Dashboard/Jazidas/Edit',['jazida'=>$jazida]);
     }
@@ -114,13 +115,14 @@ class JazidaController extends Controller
         }
         
         $jazida->delete();
-        $jazidas = Jazida::paginate(10);  // 10 rochas por página
+        $jazidas = Jazida::with('fotos')->paginate(10);  // 10 jazidas por página
 
         return redirect()->route('jazidas.index', 'jazidas')->with('success', 'Jazida deletada com sucesso!');
     }
 
     public function site(){
-        return view("Jazidas");
+        $jazidas = Jazida::with("fotos")->get();
+        return view('Jazidas',compact("jazidas"));
     }
 
 }

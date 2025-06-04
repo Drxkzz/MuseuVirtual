@@ -17,8 +17,9 @@ class FotosController extends Controller
      */
     public function index()
     {
-        $fotos = Fotos::with('rocha')->get();
-        return view('dashboard.fotos.index', ['fotos' => $fotos]);
+        $fotos = Fotos::with(['rocha','mineral','jazida'])->get();
+        # return view('dashboard.fotos.index', ['fotos' => $fotos]);
+        return Inertia::render('Dashboard/Fotos/Index',['fotos' => $fotos]);
     }
 
     /**
@@ -31,7 +32,8 @@ class FotosController extends Controller
         $jazidas = Jazida::all();
         $idRocha = request('idRocha'); // captura o valor da query string
 
-        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas', 'idRocha'));
+        # return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas', 'idRocha'));
+        return Inertia::render('Dashboard/Fotos/Create', ['rochas'=>$rochas, 'minerais'=> $minerais, 'jazidas'=>$jazidas, 'idRochas'=>$idRocha]);
     }
 
 

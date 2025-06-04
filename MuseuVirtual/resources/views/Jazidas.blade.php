@@ -11,7 +11,7 @@
     @endif
 </head>
 
-<body class="bg-[#363C27]">
+<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
     <x-menu_site />
 
     <h1 class="font-[Arial] text-[50px] ms-80 text-[#F1EEDD] pb-6 pt-16"><strong>Jazidas</strong></h1>
@@ -20,6 +20,34 @@
     </div>
 
     <div class="grid grid-cols-2 gap-8 ">
+        @foreach ($jazidas as $item)
+            <figure class="pl-80 w-full">
+                @php
+                    $fotoExibir = null; // Inicializa como nulo
+                    // Tenta encontrar uma foto com capa
+                    foreach ($item->fotos as $foto) {
+                        if ($foto->capa) {
+                            $fotoExibir = $foto;
+                            break; // Encontrou a capa, pode parar
+                        }
+                    }
+
+                    // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
+                    if (is_null($fotoExibir) && count($item->fotos) > 0) {
+                        $fotoExibir = $item->fotos[0];
+                    }
+                @endphp
+
+    
+                <img class="object-cover w-[500px] h-[500px] rounded-xl" src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da jazida tal">
+                <figcaption>
+                    <h3 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Localização: {{$item->localizacao}}</strong></h3>
+                </figcaption>
+            </figure>
+        @endforeach
+    </div>
+
+    {{-- <div class="grid grid-cols-2 gap-8 ">
         <figure class="pl-80 w-full">
             <img class="object-cover" src="/assets/img/image.png" alt="Imagem da jazida tal">
             <figcaption>
@@ -44,6 +72,8 @@
         </figcaption>
     </figure>
 
+
+
     <div class="grid grid-cols-2 gap-8">
         <figure class="pl-80 ">
             <img src="/assets/img/image.png" alt="Imagem da jazida tal">
@@ -59,26 +89,9 @@
                 <h3 class="font-[Arial] text-[20px] text-[#F1EEDD]">Fica em tal lugar</strong></h3>
             </figcaption>
         </figure>
-    </div>
+    </div> --}}
 
-
-    <div style="text-align: center;">
-        <footer>
-            <h3>Entre com sua conta no Museu Virtual</h3>
-            <form class="formulario" action="" action="get">
-                <input type="text" id="login" name="login" placeholder="Login">
-                <br>
-                <input type="text" id="Senha" name="Senha" placeholder="Senha">
-                <br>
-                <input type="button" value="Entrar">
-                <br>
-                <a href="">Ainda não se cadastrou? Cadastre-se aqui</a>
-            </form>
-            <img class="imagem_final" src="" alt="">
-            <img class="imagem_final" src="" alt="">
-        </footer>
-    </div>
-
+    <x-rodape_site></x-rodape_site>
 </body>
 
 </html>
