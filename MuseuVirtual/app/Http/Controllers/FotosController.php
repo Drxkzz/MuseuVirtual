@@ -8,6 +8,7 @@ use App\Models\Mineral;
 use App\Models\Rocha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Inertia\Inertia;
 
 class FotosController extends Controller
 {
@@ -94,9 +95,11 @@ class FotosController extends Controller
     {
         $fotos = Fotos::where('id', $id)->first();
         if (!empty($fotos)) {
-            return view('dashboard.fotos.edit', ['fotos' => $fotos]);
+            # return view('dashboard.fotos.edit', ['fotos' => $fotos]);
+            return Inertia::render('Dashboard/Fotos/Edit', ['fotos' => $fotos]);
         } else {
-            return redirect()->route('fotos-index');
+            # return redirect()->route('fotos-index');
+            return Inertia::render('Dashboard/Fotos/Index');
         }
     }
 
