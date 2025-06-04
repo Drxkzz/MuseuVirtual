@@ -79,7 +79,7 @@ function submitDelete(id) {
                       </p>
                       <img
                         v-else
-                        :src="`/storage/${mineral.fotos[0].caminho}`"
+                        :src="`/storage/${(mineral.fotos.find(f => f.capa) || mineral.fotos[0]).caminho}`"
                         alt="Foto dos Minerais"
                         class="h-[144px] w-[128px] object-cover"
                       />

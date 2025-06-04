@@ -82,10 +82,10 @@ function submitDeleteFoto(id) {
                             <h2 class="self-center font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                                 Fotos do Mineral:
                             </h2>
-                            <router-link :to="route('fotos-create', { idMineral: mineral.id })"
-                                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
-                                Adicionar Fotos
-                            </router-link>
+
+                            <a :href="route('fotos-create', { idMineral: mineral.id })" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">
+                                Adicionar fotos
+                            </a>
                         </div>
 
                         <div class="flex flex-wrap border-gray-300 dark:border-gray-700 rounded-md shadow-sm mt-4">
@@ -94,12 +94,11 @@ function submitDeleteFoto(id) {
                                 class="flex flex-col h-[212px] w-[160px] items-center justify-between p-2 m-2 border rounded-md dark:border-gray-700">
                                 <img :src="`/storage/${foto.caminho}`" alt="Foto do Mineral." class="h-[144px] w-[128px] object-cover mb-2">
                                 <div class="flex items-center gap-2">
-                                    <router-link :to="route('fotos-edit', foto.id)"
-                                        class="bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700">
+                                    <a :href="route('fotos-edit', foto.id)" class="bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700 text-sm">
                                         Editar
-                                    </router-link>
+                                    </a>
                                     <button @click="submitDeleteFoto(foto.id)"
-                                        class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">
+                                        class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-sm">
                                         Excluir
                                     </button>
                                 </div>
