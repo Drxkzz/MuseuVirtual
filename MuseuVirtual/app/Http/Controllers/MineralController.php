@@ -5,6 +5,8 @@ use App\Models\Mineral;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
+use Inertia\Inertia;
+
 class MineralController extends Controller
 {
     /**
@@ -14,7 +16,7 @@ class MineralController extends Controller
     {
         $minerais = Mineral::with('fotos')->get();
         // dd($minerais);
-        return view('dashboard.minerais.index', compact('minerais'));
+        return Inertia::render('Dashboard/Minerais/Index', ['minerais'=>$minerais]);
     }
 
     /**
@@ -22,7 +24,7 @@ class MineralController extends Controller
      */
     public function create()
     {
-        return view('dashboard.minerais.create');
+        return Inertia::render('Dashboard/Minerais/Create');
     }
 
     /**
@@ -65,7 +67,7 @@ class MineralController extends Controller
     public function edit($id)
     {
         $mineral = Mineral::with('fotos')->findOrFail($id);
-        return view('dashboard.minerais.edit', compact('mineral'));
+        return Inertia::render('Dashboard/Minerais/Edit', ['mineral' => $mineral]);
     }
     
 
@@ -74,11 +76,12 @@ class MineralController extends Controller
      */
     public function update(Request $request, Mineral $mineral)
     {
+        //dd($mineral);
+        $mineral = Mineral::with('fotos')->findOrFail($request->id);
         $request->validate([
             'nome' => 'sometimes|required|string|max:255',
             'descricao' => 'nullable|string',
-            'composicao' => 'nullable|string',
-            'tipo' => 'required|integer',
+            'propriedades' => 'nullable|string',
         ]);
 
         // Atualizando apenas os campos que foram enviados
@@ -91,12 +94,12 @@ class MineralController extends Controller
         }
 
         if ($request->filled('propriedades')) {
-            $mineral->composicao = $request->composicao;
+            $mineral->propriedades = $request->propriedades;
         }
 
         $mineral->save();
 
-        return redirect()->route('Mineral.index')->with('success', 'Mineral atualizado com sucesso!');
+        return redirect()->route('minerais.index')->with('success', 'Mineral atualizado com sucesso!');
     }
 
     /**
