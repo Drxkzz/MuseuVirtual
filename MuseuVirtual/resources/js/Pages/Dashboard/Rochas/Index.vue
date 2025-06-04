@@ -100,7 +100,7 @@ function deleteRocha(id) {
                             <component
                                 v-for="link in rochas.links"
                                 :key="link.label"
-                                :is="link.url ? 'router-link' : 'span'"
+                                :is="link.url ? 'a' : 'span'"
                                 :to="link.url"
                                 class="mx-1 px-3 py-1 rounded text-sm"
                                 :class="{

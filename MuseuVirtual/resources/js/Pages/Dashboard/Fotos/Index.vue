@@ -50,13 +50,13 @@ function deletar(id) {
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{{ foto.id }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                  {{ foto.rocha ? foto.rocha.nome : 'Não Existe' }}
+                  {{ foto.rocha ? foto.rocha.nome : '-' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                  {{ foto.mineral ? foto.mineral.nome : 'Não Existe' }}
+                  {{ foto.mineral ? foto.mineral.nome : '-' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
-                  {{ foto.jazida ? foto.jazida.localizacao : 'Não Existe' }}
+                  {{ foto.jazida ? foto.jazida.localizacao : '-' }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">
                   {{ foto.capa ? 'Sim' : 'Não' }}
