@@ -94,12 +94,11 @@ function submitDeleteFoto(id) {
                                 class="flex flex-col h-[212px] w-[160px] items-center justify-between p-2 m-2 border rounded-md dark:border-gray-700">
                                 <img :src="`/storage/${foto.caminho}`" alt="Foto do Mineral." class="h-[144px] w-[128px] object-cover mb-2">
                                 <div class="flex items-center gap-2">
-                                    <a :href="route('fotos-edit', foto.id)"
-                                        class="bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700">
+                                    <a :href="route('fotos-edit', foto.id)" class="bg-gray-600 text-white px-2 py-1 rounded hover:bg-gray-700 text-sm">
                                         Editar
                                     </a>
                                     <button @click="submitDeleteFoto(foto.id)"
-                                        class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">
+                                        class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-sm">
                                         Excluir
                                     </button>
                                 </div>
