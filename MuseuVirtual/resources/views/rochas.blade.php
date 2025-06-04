@@ -47,7 +47,7 @@
 
                         @if ($fotoExibir)
                             {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-120"
+                            <img class="object-cover w-full h-[500px] rounded-xl"
                                 src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
                             <div class="flex">
                                 {{-- <div class="flex">
@@ -174,7 +174,7 @@
 
                         @if ($fotoExibir)
                             {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-120"
+                            <img class="object-cover w-full h-[500px] rounded-xl"
                                 src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
                             <div class="flex">
                                 {{-- <div class="flex">
