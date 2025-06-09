@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quill com Imagem Inicial</title>
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <style>
+    #editor {
+      height: 200px;
+    }
+    #editor img{
+        max-width: 300px;
+        width: 100%;
+        height: auto;
+    }
+  </style>
+</head>
+<body>
+  <form id="form">
+    <div id="editor"></div>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: {
+          container: [
+            ['bold', 'italic', 'underline'],
+            ['image', 'code-block']
+          ],
+          handlers: {
+            image: function () {
+              const input = document.createElement('input');
+              input.setAttribute('type', 'file');
+              input.setAttribute('accept', 'image/*');
+              input.click();
+
+              input.onchange = () => {
+                // Adicionar imagem sem fazer upload
+                const file = input.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                  const imageUrl = e.target.result;
+                  const range = quill.getSelection();
+                  if (range) {
+                    quill.insertEmbed(range.index, 'image', imageUrl);
+                  }
+                }
+
+                reader.readAsDataURL(file);  // Converte a imagem para base64
+              };
+            },
+          },
+        },
+      },
+    });
+
+    // Inserir a imagem inicial (Aaaa.jpg) diretamente no editor
+    const imageUrl = '/uploads/Aaaa.jpg';
+    const range = quill.getSelection();
+    if (range) {
+      quill.insertEmbed(range.index, 'image', imageUrl);
+    } else {
+      // Se não houver seleção, apenas insira a imagem no começo
+      quill.insertEmbed(0, 'image', imageUrl);
+    }
+
+    document.getElementById('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const html = quill.root.innerHTML;
+      console.log('Conteúdo do editor:', html);
+      alert('Conteúdo capturado no console.');
+    });
+  </script>
+</body>
+</html>
