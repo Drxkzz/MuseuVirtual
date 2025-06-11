@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,9 +19,17 @@ class ImageUploadController extends Controller
         return response()->json(['error' => 'Nenhum arquivo enviado'], 400);
     }
 
-    public function picker()
+    public function picker($type)
     {
+        if($type == "rocha"){
+            $files_set = Storage::disk('public')->files('fotos/rochas');
+        }elseif($type == "jazida"){
+            $files_set = Storage::disk('public')->files('fotos/jazidas');
+        }else{
+            $files_set = Storage::disk('public')->files('fotos/minerais');
+        }
         $files = Storage::disk('public')->files('uploads');
+        $files = array_merge($files_set, $files);
         // Gere URLs públicas
         $images = array_map(function ($file) {
             return asset('storage/' . $file);
