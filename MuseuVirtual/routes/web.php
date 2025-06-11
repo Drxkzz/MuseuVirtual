@@ -9,6 +9,9 @@ use App\Http\Controllers\SiteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UploadImagemController;
+
+
 
 
 // Route::get('/', function () {
@@ -64,6 +67,9 @@ Route::prefix('fotos')->group(function(){
     Route::put('/{id}', [FotosController::class, 'update'])->name('fotos-update');
     Route::delete('/{id}', [FotosController::class, 'destroy'])->name('fotos-destroy');
 });
+
+Route::post('/upload-imagem', [UploadImagemController::class, 'store'])->name('upload.imagem');
+
 
 Route::fallback(function(){
     return "Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)";
