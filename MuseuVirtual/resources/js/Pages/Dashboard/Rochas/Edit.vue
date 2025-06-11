@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
 import { computed, ref, onMounted } from 'vue';
+import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const props = defineProps({
     rocha: {
@@ -56,9 +57,7 @@ function submitDeleteFoto(id) {
                             <!-- Descrição -->
                             <div class="mb-4">
                                 <label for="descricao" class="block font-medium text-sm text-gray-700 dark:text-gray-300">Descrição</label>
-                                <textarea v-model="rocha.descricao" id="descricao" rows="4"
-                                          class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300
-                                                 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring focus:ring-indigo-200 rounded-md shadow-sm"></textarea>
+                                <TinyMCEEditor v-model="rocha.descricao" />
                             </div>
 
                             <!-- Composição -->

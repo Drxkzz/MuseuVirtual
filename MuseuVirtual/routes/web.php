@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FotosController;
+use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
@@ -65,8 +66,11 @@ Route::prefix('fotos')->group(function(){
     Route::delete('/{id}', [FotosController::class, 'destroy'])->name('fotos-destroy');
 });
 
+Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
+Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
+
 Route::fallback(function(){
-    return "Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)";
+    return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");
 });
 
 
