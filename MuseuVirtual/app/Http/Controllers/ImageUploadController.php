@@ -12,7 +12,7 @@ class ImageUploadController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $path = $file->store('uploads', 'public');
-            $url = Storage::url($path);
+            $url = asset('storage/' . $path);
             return response()->json(['location' => $url]);
         }
         return response()->json(['error' => 'Nenhum arquivo enviado'], 400);
