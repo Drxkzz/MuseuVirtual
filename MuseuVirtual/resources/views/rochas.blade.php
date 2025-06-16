@@ -23,7 +23,7 @@
 
         {{-- tipo 1 --}}
         <div class="flex grid grid-cols-2 gap-6 mt-20">
-            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>tipo 1</strong></h2>
+            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Igneas</strong></h2>
         </div>
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
@@ -87,7 +87,7 @@
         </div>
         {{-- tipo 2 --}}
         <div class="flex grid grid-cols-2 gap-6 mt-20">
-            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>tipo 2</strong></h2>
+            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Metamórficas</strong></h2>
         </div>
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
@@ -125,10 +125,6 @@
                                 </figcaption>
                             </div>
                         @else
-                            {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                            <div class="flex">
                                 {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
@@ -150,7 +146,7 @@
         </div>
         {{-- tipo 3 --}}
         <div class="flex grid grid-cols-2 gap-6 mt-20">
-            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>tipo 3</strong></h2>
+            <h2 class="font-[Arial] text-[40px] text-[#F1EEDD] pb-8"><strong>Sedimentares</strong></h2>
         </div>
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">

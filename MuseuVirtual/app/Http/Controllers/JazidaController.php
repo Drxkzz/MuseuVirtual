@@ -122,7 +122,7 @@ class JazidaController extends Controller
 
     public function site(){
         $jazidas = Jazida::with("fotos")->get();
-        return view('Jazidas',compact("jazidas"));
+        return view('_Jazidas',compact("jazidas"));
     }
 
 }
