@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import { ref, reactive } from 'vue';
+import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const form = reactive({
     nome: '',
@@ -49,7 +50,7 @@ function submitForm() {
   <Head title="Cadastrar Mineral" />
   <AuthenticatedLayout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
         Cadastrar Mineral
       </h2>
     </template>
@@ -69,7 +70,7 @@ function submitForm() {
               <!-- Descrição -->
               <div class="mb-4">
                 <label for="descricao" class="block font-medium">Descrição</label>
-                <input id="descricao" v-model="form.descricao" type="text" required class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
+                <TinyMCEEditor v-model="form.descricao" />
               </div>
 
               <!-- Propriedades -->

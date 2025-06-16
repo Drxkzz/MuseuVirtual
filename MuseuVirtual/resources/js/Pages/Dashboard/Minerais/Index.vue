@@ -29,22 +29,21 @@ function submitDelete(id) {
 <template>
   <Head title="Lista de Minerais" />
   <AuthenticatedLayout>
+    
+    <template #header>
+      <div class="flex justify-between">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-800 leading-tight">
+            Lista de minerais
+        </h2>
+        <a :href="route('minerais.create')"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"> Cadastrar Mineral </a>
+      </div>
+    </template>
+
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
-            <!-- Cabeçalho -->
-            <div class="flex justify-between mb-4">
-              <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Lista de Minerais
-              </h2>
-              <a
-                :href="route('minerais.create')"
-                class="bg-gray-100 inline-block text-black px-4 bg-blue-600 rounded hover:bg-blue-700"
-              >
-                Cadastrar Mineral
-              </a>
-            </div>
 
             <!-- Mensagem de sucesso -->
             <div v-if="successMessage" class="mb-4 p-4 bg-green-100 text-green-800 rounded">
