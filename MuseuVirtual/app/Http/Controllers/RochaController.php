@@ -67,9 +67,10 @@ class RochaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rocha $rocha)
+    public function show($rocha)
     {
-        //
+        $rocha = Rocha::with('fotos')->findOrFail($rocha);
+        return view('rochaEspecifica',compact('rocha'));
     }
 
     /**
