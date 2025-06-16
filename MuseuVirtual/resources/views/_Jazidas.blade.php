@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Minerais</title>
+    <title>Jazidas</title>
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -16,15 +16,14 @@
     <x-menu_site />
     <div class="w-[1600px] mx-auto">
 
-        <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Minerais</strong></h1>
+        <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Jazidas</strong></h1>
         <div class="">
-            <img class= "pb-40 w-full " src="/assets/img/image (3).png" alt="Foto do mineral tal">
+            <img class= "pb-40 w-full " src="/assets/img/image (3).png" alt="Foto da jazida tal">
         </div>
-
+        {{-- @dd($jazidas) --}}
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
-                @foreach ($minerais as $item)
-                <a href="{{ route('minerais.show', $item->id) }}">
+                @foreach ($jazidas as $item)
                     <figure class="w-full hover:w-">
                         @php
                             $fotoExibir = null; // Inicializa como nulo
@@ -45,7 +44,7 @@
                         @if ($fotoExibir)
                             {{-- Verifica se uma foto foi encontrada para exibir --}}
                             <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem do mineral tal">
+                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da jazida tal">
                             <div class="flex">
                                 {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
@@ -53,7 +52,7 @@
                             </div> --}}
                                 <figcaption>
                                     <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
+                                        <strong>{{ $item->localizacao }}</strong>
                                     </h2>
                                 </figcaption>
                             </div>
@@ -74,7 +73,7 @@
                             </div>
                         @endif
 
-                    </figure></a>
+                    </figure>
                 @endforeach
 
             </div>

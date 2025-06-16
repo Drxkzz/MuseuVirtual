@@ -24,9 +24,11 @@
                     <strong>AQUI</strong></a>
             </p>
         </form>
-        <img  src="/assets/img/pedraFinal.png" alt="">
+        <img  class="w-full" src="/assets/img/pedraFinal.png" alt="">
 
-        <img class="p-1 pl-9 pr-9 rounded-xl bg-[#F1EEDD] p-4" src="/assets/img/logoifes 1.png"
+        <div class="bg-[#F1EEDD] h-full">
+            <img class="p-1 pl-9 pr-9 rounded-xl bg-[#F1EEDD] p-4 h-full" src="/assets/img/logoifes 1.png"
             alt="Logo do IFES">
+        </div>
     </footer>
     <div>
