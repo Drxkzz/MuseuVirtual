@@ -8,6 +8,7 @@ use App\Models\Mineral;
 use App\Models\Rocha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Inertia\Inertia;
 
 class FotosController extends Controller
 {
@@ -16,8 +17,9 @@ class FotosController extends Controller
      */
     public function index()
     {
-        $fotos = Fotos::with('rocha')->get();
-        return view('dashboard.fotos.index', ['fotos' => $fotos]);
+        $fotos = Fotos::with(['rocha','mineral','jazida'])->get();
+        # return view('dashboard.fotos.index', ['fotos' => $fotos]);
+        return Inertia::render('Dashboard/Fotos/Index',['fotos' => $fotos]);
     }
 
     /**
@@ -28,8 +30,12 @@ class FotosController extends Controller
         $rochas = Rocha::all();
         $minerais = Mineral::all();
         $jazidas = Jazida::all();
-        return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas'));
+        $idRocha = request('idRocha'); // captura o valor da query string
+
+        # return view('dashboard.fotos.create', compact('rochas', 'minerais', 'jazidas', 'idRocha'));
+        return Inertia::render('Dashboard/Fotos/Create', ['rochas'=>$rochas, 'minerais'=> $minerais, 'jazidas'=>$jazidas, 'idRochas'=>$idRocha]);
     }
+
 
 
     /**
@@ -76,7 +82,6 @@ class FotosController extends Controller
             return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
         }
     }
-
     /**
      * Display the specified resource.
      */
@@ -92,9 +97,11 @@ class FotosController extends Controller
     {
         $fotos = Fotos::where('id', $id)->first();
         if (!empty($fotos)) {
-            return view('dashboard.fotos.edit', ['fotos' => $fotos]);
+            # return view('dashboard.fotos.edit', ['fotos' => $fotos]);
+            return Inertia::render('Dashboard/Fotos/Edit', ['fotos' => $fotos]);
         } else {
-            return redirect()->route('fotos-index');
+            # return redirect()->route('fotos-index');
+            return Inertia::render('Dashboard/Fotos/Index');
         }
     }
 
@@ -105,9 +112,10 @@ class FotosController extends Controller
     public function update(Request $request, $id)
     {
         $foto = Fotos::findOrFail($id);
-
         // Atualiza campo de capa
-        $capa = $request->has('capa') ? 1 : 0;
+
+        $capa = $request->capa != null && $request->capa != "0" ? 1 : 0;
+
         if ($capa) {
             // Remove marcação de outras capas
             Fotos::where('capa', 1)->update(['capa' => 0]);

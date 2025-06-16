@@ -13,8 +13,8 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
+    <x-menu_site />
     <div class="w-[1600px] mx-auto">
-        <x-menu_site />
 
         <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Rochas</strong></h1>
         <div class="">

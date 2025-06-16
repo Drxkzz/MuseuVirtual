@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Mineral;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
+use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
+use Inertia\Inertia;
+
 class MineralController extends Controller
 {
     /**
@@ -12,7 +16,7 @@ class MineralController extends Controller
     {
         $minerais = Mineral::with('fotos')->get();
         // dd($minerais);
-        return view('dashboard.minerais.index', compact('minerais'));
+        return Inertia::render('Dashboard/Minerais/Index', ['minerais'=>$minerais]);
     }
 
     /**
@@ -20,7 +24,7 @@ class MineralController extends Controller
      */
     public function create()
     {
-        return view('dashboard.minerais.create');
+        return Inertia::render('Dashboard/Minerais/Create');
     }
 
     /**
@@ -33,6 +37,19 @@ class MineralController extends Controller
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
         $mineral -> save();
+        
+        if ($request->hasFile('foto')) {
+            $fotosRequest = new Request([
+                "idMineral" => $mineral->id,
+                "capa_nome" => $request->input('capa_nome'),
+            ]);
+
+            // Encaminha os arquivos
+            $fotosRequest->files->set('foto', $request->file('foto'));
+
+            // Chama o controller de fotos
+            app(\App\Http\Controllers\FotosController::class)->store($fotosRequest);
+        }
         return redirect('/minerais/');
     }
 
@@ -49,31 +66,62 @@ class MineralController extends Controller
      */
     public function edit($id)
     {
-        $mineral = Mineral::findOrFail($id);
-        return view('dashboard.minerais.edit', compact('mineral'));
+        $mineral = Mineral::with('fotos')->findOrFail($id);
+        return Inertia::render('Dashboard/Minerais/Edit', ['mineral' => $mineral]);
     }
     
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Mineral $mineral)
     {
-        $mineral = Mineral::findOrFail($id);  // Buscar o mineral, antes de alterar os dados
-        $mineral -> nome = $request -> nome;
-        $mineral -> descricao = $request -> descricao;
-        $mineral -> propriedades = $request -> propriedades;
-        $mineral -> save();
-        return redirect('/minerais/');
+        //dd($mineral);
+        $mineral = Mineral::with('fotos')->findOrFail($request->id);
+        $request->validate([
+            'nome' => 'sometimes|required|string|max:255',
+            'descricao' => 'nullable|string',
+            'propriedades' => 'nullable|string',
+        ]);
+
+        // Atualizando apenas os campos que foram enviados
+        if ($request->filled('nome')) {
+            $mineral->nome = $request->nome;
+        }
+
+        if ($request->filled('descricao')) {
+            $mineral->descricao = $request->descricao;
+        }
+
+        if ($request->filled('propriedades')) {
+            $mineral->propriedades = $request->propriedades;
+        }
+
+        $mineral->save();
+
+        return redirect()->route('minerais.index')->with('success', 'Mineral atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($mineral)
     {
-        $mineral = Mineral::findOrFail($id);
+        $mineral = Mineral::findOrFail($mineral);  // Buscar o mineral, antes de alterar os dados
+        foreach ($mineral->fotos as $foto) {
+            app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
+
+        }
+        
         $mineral->delete();
-        return redirect('/minerais/');
+        $minerais = Mineral::paginate(10);  // 10 rochas por página
+
+        return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }
+    public function site(){
+        $minerais = Mineral::with("fotos")->get();
+        return view('Minerais',compact("minerais"));
+    
+    }
+
 }

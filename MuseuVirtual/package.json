@@ -22,6 +22,8 @@
     },
     "dependencies": {
         "@primeuix/themes": "^1.1.1",
-        "primevue": "^4.3.4"
+        "@tinymce/tinymce-vue": "^4.0.7",
+        "primevue": "^4.3.4",
+        "vue-router": "^4.5.1"
     }
 }

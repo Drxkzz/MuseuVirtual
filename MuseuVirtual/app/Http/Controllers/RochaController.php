@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Rocha;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
+use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
+use Inertia\Inertia;
 
 class RochaController extends Controller
 {
@@ -12,9 +15,11 @@ class RochaController extends Controller
      */
     public function index()
     {
-        $rochas = Rocha::with('fotos')->paginate(10);  // 10 rochas por página
-        // dd(vars: $rochas);
-        return view('dashboard.rocha.index', compact('rochas'));
+        $rochas = Rocha::with('fotos')->paginate(10);
+
+        return Inertia::render('Dashboard/Rochas/Index', [
+            'rochas' => $rochas
+        ]);
     }
 
     /**
@@ -22,7 +27,7 @@ class RochaController extends Controller
      */
     public function create()
     {
-        return view('dashboard.rocha.create');
+        return Inertia::render('Dashboard/Rochas/Create');
     }
 
     /**
@@ -73,9 +78,11 @@ class RochaController extends Controller
     public function edit($id)
     {
 
-        $rocha = Rocha::with('fotos')->findOrFail($id);
 
-        return view('dashboard.rocha.edit', compact('rocha'));
+        
+        $rocha = Rocha::with('fotos')->findOrFail($id);
+        
+        return Inertia::render('Dashboard/Rochas/Edit', ['rocha' => $rocha]);
     }
 
     /**
@@ -118,7 +125,6 @@ class RochaController extends Controller
      */
     public function destroy(Rocha $rocha)
     {
-        dd($rocha);
         foreach ($rocha->fotos as $foto) {
             app(\App\Http\Controllers\FotosController::class)->destroy($foto->id);
 

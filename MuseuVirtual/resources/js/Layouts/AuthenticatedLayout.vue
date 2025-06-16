@@ -37,7 +37,31 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('dashboard')"
                                     :active="route().current('dashboard')"
                                 >
-                                    Dashboard
+                                    Home
+                                </NavLink>
+                                <NavLink
+                                    :href="route('rochas.index')"
+                                    :active="route().current('rochas.*')"
+                                >
+                                    Rochas
+                                </NavLink>
+                                <NavLink
+                                    :href="route('jazidas.index')"
+                                    :active="route().current('jazidas.*')"
+                                >
+                                    Jazidas
+                                </NavLink>
+                                <NavLink
+                                    :href="route('fotos-index')"
+                                    :active="route().current('fotos-*')"
+                                >
+                                    Fotos
+                                </NavLink>
+                                <NavLink
+                                    :href="route('minerais.index')"
+                                    :active="route().current('minerais.*')"
+                                >
+                                    Minerais
                                 </NavLink>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FotosController;
+use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\JazidaController;
 use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
@@ -19,8 +20,9 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get("/",[SiteController::class,'home']);
+Route::get("/",[SiteController::class,'home'])->name("home");
 Route::get("/site/jazidas", [JazidaController::class, 'site'])->name("site.jazidas");
+Route::get("/site/minerais", [MineralController::class, 'site'])->name("site.minerais");
 
 Route::get("/site/rochas", [RochaController::class, 'site'])->name("site.rochas");
 Route::get("/api/rochas", [RochaController::class,'apiListRocha']);
@@ -38,9 +40,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
 Route::resource('rochas', RochaController::class)->names('Rocha');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -64,8 +66,11 @@ Route::prefix('fotos')->group(function(){
     Route::delete('/{id}', [FotosController::class, 'destroy'])->name('fotos-destroy');
 });
 
+Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
+Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
+
 Route::fallback(function(){
-    return "Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)";
+    return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");
 });
 
 
