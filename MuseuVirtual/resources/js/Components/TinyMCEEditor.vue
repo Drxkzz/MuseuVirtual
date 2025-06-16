@@ -19,9 +19,9 @@ function initTinyMCE() {
   window.tinymce.init({
     selector: `#${editorId}`,
     height: 300,
-    menubar: false,
-    plugins: "lists link image preview visualblocks",
-    toolbar: "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    menubar: true,
+    plugins: ["lists", "link", "image", "preview", "visualblocks", "advlist", "lists","charmap","anchor","searchreplace","code","fullscreen","insertdatetime","media","table","help","wordcount","autolink"],
+    toolbar: "undo redo | blocks | formatselect | bold italic backcolor| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
     skin_url: "/tinymce/js/tinymce/skins/ui/oxide",
     content_css: "/tinymce/js/tinymce/skins/content/default/content.css",
     language: "pt_BR",
