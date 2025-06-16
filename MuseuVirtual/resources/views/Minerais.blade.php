@@ -75,13 +75,12 @@
 
                     </figure>
                 @endforeach
-
             </div>
             <div>
                 <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
             </div>
 
-        {{-- <figure class="pl-80 pb-20 w-[82%]">
+            {{-- <figure class="pl-80 pb-20 w-[82%]">
         <img src="/assets/img/image (3).png" alt="Imagem da rocha tal">
         <figcaption>
             <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
@@ -114,9 +113,12 @@
             </div>
         </figure>
     </div> --}}
-
-        <x-rodape_site></x-rodape_site>
-    </div>
+            <div class="flex justify-center">
+                <div class="pagination">
+                    {{ $minerais->links() }}
+                </div>
+                <x-rodape_site></x-rodape_site>
+        </div>
 </body>
 
 </html>

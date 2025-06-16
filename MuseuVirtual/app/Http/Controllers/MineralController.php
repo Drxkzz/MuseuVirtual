@@ -119,7 +119,7 @@ class MineralController extends Controller
         return redirect()->route('minerais.index', 'minerals')->with('success', 'Mineral deletado com sucesso!');
     }
     public function site(){
-        $minerais = Mineral::with("fotos")->get();
+        $minerais = Mineral::with("fotos")->paginate(10);
         return view('Minerais',compact("minerais"));
     
     }

@@ -149,4 +149,8 @@ class RochaController extends Controller
         return view('rochas',compact("rochastipo1","rochastipo2","rochastipo3"));
 
     }
+
+    public function site_tipo_rocha($tipo){
+        return view('rocha_tipo');
+    }
 }

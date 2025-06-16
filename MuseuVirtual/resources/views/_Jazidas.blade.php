@@ -114,7 +114,10 @@
             </div>
         </figure>
     </div> --}}
-
+            <div class="flex justify-center">
+                <div class="pagination">
+                    {{ $jazidas->links() }}
+                </div>
         <x-rodape_site></x-rodape_site>
     </div>
 </body>

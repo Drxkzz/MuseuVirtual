@@ -82,7 +82,7 @@
 
             </div>
             <div>
-                <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
+                <a href="{{route('site.rochas.tipo', $item->tipo)}}"><p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p></a>
             </div>
         </div>
         {{-- tipo 2 --}}
@@ -141,7 +141,7 @@
 
             </div>
             <div>
-                <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
+                <a href="{{route('site.rochas.tipo', $item->tipo)}}"><p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p></a>
             </div>
         </div>
         {{-- tipo 3 --}}
@@ -214,7 +214,7 @@
             </div>
         </div>
         <div>
-            <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
+            <a href="{{route('site.rochas.tipo', $item->tipo)}}"><p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p></a>
         </div>
 
         {{-- <figure class="pl-80 pb-20 w-[82%]">
