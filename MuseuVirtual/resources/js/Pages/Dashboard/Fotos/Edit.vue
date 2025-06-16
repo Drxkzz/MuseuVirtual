@@ -42,6 +42,57 @@ const atualizarCardCapa = (e) => {
         },
     ]
 }
+
+
+const mostrarModalImagem = ref(false)
+const anotacoes = ref([])
+
+const abrirModalImagem = () => {
+    mostrarModalImagem.value = true
+}
+
+const fecharModalImagem = () => {
+    mostrarModalImagem.value = false
+}
+
+
+
+const imagemRef = ref(null)
+
+const adicionarAnotacao = (e) => {
+    const img = imagemRef.value
+    const bounds = img.getBoundingClientRect()
+
+    const x = e.clientX - bounds.left
+    const y = e.clientY - bounds.top
+
+    const texto = prompt("Digite o texto da anotação:")
+    if (texto) {
+        anotacoes.value.push({
+            x,
+            y,
+            texto,
+            mostrarTexto: true
+        })
+    }
+}
+
+const toggleAnotacao = (index) => {
+    anotacoes.value[index].mostrarTexto = !anotacoes.value[index].mostrarTexto
+}
+
+const editarAnotacao = (index) => {
+    const novaMensagem = prompt("Editar anotação:", anotacoes.value[index].texto)
+    if (novaMensagem !== null && novaMensagem.trim() !== '') {
+        anotacoes.value[index].texto = novaMensagem.trim()
+    }
+}
+
+const removerAnotacao = (index) => {
+    if (confirm("Deseja remover esta anotação?")) {
+        anotacoes.value.splice(index, 1)
+    }
+}
 </script>
 
 
@@ -61,7 +112,15 @@ const atualizarCardCapa = (e) => {
         </template>
         <div class="py-12">
             <div class="max-w-3xl mx-auto mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Edição de Fotos</h2>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                        Edição de Fotos
+                    </h2>
+                    <a @click='abrirModalImagem' 
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Adicionar Informações Imagem
+                    </a>
+                </div>
 
                 <div class="mb-4">
                     <h2>Foto Antiga</h2>
@@ -128,6 +187,60 @@ const atualizarCardCapa = (e) => {
                 </form>
             </div>
         </div>
+        
+        <div v-if="mostrarModalImagem"
+            class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div class="bg-white p-4 rounded relative w-[90%] max-w-4xl max-h-[90%] overflow-auto">
+                <!-- Botão Fechar -->
+                <button @click="fecharModalImagem"
+                        class="absolute top-2 right-2 text-gray-700 hover:text-red-600">
+                    ✕
+                </button>
+    
+                <h3 class="text-lg font-semibold mb-4">Clique na imagem para adicionar informações</h3>
+    
+                <!-- Container da imagem -->
+                <div class="relative">
+                    <img :src="`/storage/${props.fotos.caminho}`" 
+                        @click="adicionarAnotacao"
+                        ref="imagemRef"
+                        class="w-full h-auto cursor-crosshair" />
+    
+                    <div v-for="(anotacao, index) in anotacoes"
+                        :key="index"
+                        :style="{
+                            position: 'absolute',
+                            top: anotacao.y + 'px',
+                            left: anotacao.x + 'px',
+                            transform: 'translate(-50%, -50%)'
+                        }"
+                        class="absolute z-10">
+
+                        <div @click="toggleAnotacao(index)"
+                            class="w-4 h-4 bg-red-600 rounded-full shadow cursor-pointer border-2 border-white animate-pulse">
+                        </div>
+
+                        <div v-if="anotacao.mostrarTexto"
+                            class="absolute mt-2 left-1/2 -translate-x-1/2 bg-white text-black text-sm p-2 rounded shadow-lg z-20 max-w-[200px] w-max min-w-[100px]">
+                            <p class="mb-2 break-words">{{ anotacao.texto }}</p>
+                            <div class="flex justify-between space-x-2 text-xs">
+                                <button @click.stop="editarAnotacao(index)" class="text-blue-600 hover:underline">Editar</button>
+                                <button @click.stop="removerAnotacao(index)" class="text-red-600 hover:underline">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    
+                <!-- Botão de salvar -->
+                <div class="mt-4 flex justify-end">
+                    <button @click="salvarAnotacoes"
+                            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                        Salvar Anotações
+                    </button>
+                </div>
+            </div>
+        </div>
     </AuthenticatedLayout>
 </template>
 
@@ -160,4 +273,16 @@ const atualizarCardCapa = (e) => {
     border-radius: 0.25rem;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
+/* Animação de pulsar (já usada no pin) */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pulse {
+    animation: pulse 1.5s infinite;
+}
+
 </style>
