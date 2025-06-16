@@ -67,7 +67,7 @@ Route::prefix('fotos')->group(function(){
 });
 
 Route::post('/upload', [ImageUploadController::class, 'upload'])->name('image.upload');
-Route::get('/image-picker', [ImageUploadController::class, 'picker'])->name('image.picker');
+Route::get('/image-picker/{type?}', [ImageUploadController::class, 'picker'])->name('image.picker');
 
 Route::fallback(function(){
     return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");

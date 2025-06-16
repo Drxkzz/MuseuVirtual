@@ -20,9 +20,8 @@ function initTinyMCE() {
     selector: `#${editorId}`,
     height: 300,
     menubar: false,
-    plugins: "lists link image preview",
-    toolbar:
-      "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    plugins: "lists link image preview visualblocks",
+    toolbar: "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
     skin_url: "/tinymce/js/tinymce/skins/ui/oxide",
     content_css: "/tinymce/js/tinymce/skins/content/default/content.css",
     language: "pt_BR",
