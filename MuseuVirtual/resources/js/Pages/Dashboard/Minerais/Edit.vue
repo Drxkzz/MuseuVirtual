@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { router, usePage } from '@inertiajs/vue3';
 import { Head } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
+import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const props = defineProps({
     mineral: {
@@ -56,10 +57,7 @@ function submitDeleteFoto(id) {
 
                             <div class="mb-4">
                                 <label for="descricao" class="block mt-1 w-full">Descrição</label>
-                                <textarea v-model="mineral.descricao" id="descricao" rows="4" required
-                                    class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
-                                           focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
-                                           rounded-md shadow-sm"></textarea>
+                                <TinyMCEEditor v-model="mineral.descricao" />
                             </div>
 
                             <div class="mb-4">
