@@ -9,7 +9,7 @@ use App\Models\Rocha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
-
+use App\Models\AnotacaoFoto;
 class FotosController extends Controller
 {
     /**
@@ -82,6 +82,7 @@ class FotosController extends Controller
             return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
         }
     }
+
     /**
      * Display the specified resource.
      */
@@ -95,15 +96,13 @@ class FotosController extends Controller
      */
     public function edit($id)
     {
-        $fotos = Fotos::where('id', $id)->first();
-        if (!empty($fotos)) {
-            # return view('dashboard.fotos.edit', ['fotos' => $fotos]);
-            return Inertia::render('Dashboard/Fotos/Edit', ['fotos' => $fotos]);
-        } else {
-            # return redirect()->route('fotos-index');
-            return Inertia::render('Dashboard/Fotos/Index');
-        }
+        $fotos = Fotos::with('anotacoes')->findOrFail($id);
+
+        return Inertia::render('Dashboard/Fotos/Edit', [
+            'fotos' => $fotos
+        ]);
     }
+
 
 
     /**
@@ -175,5 +174,40 @@ class FotosController extends Controller
         $foto->delete();
 
         return redirect()->back();
+    }
+
+
+    public function salvarAnotacoes(Request $request, $fotoId)
+    {
+        $anotacoes = $request->input('anotacoes', []);
+        $deletadas = $request->input('deletadas', []);
+
+        // Deletar as anotações marcadas para exclusão
+        if (!empty($deletadas)) {
+            AnotacaoFoto::whereIn('id', $deletadas)->delete();
+        }
+
+        foreach ($anotacoes as $anotacao) {
+            if (isset($anotacao['id']) && $anotacao['id']) {
+                // Atualiza anotação existente
+                $registro = AnotacaoFoto::find($anotacao['id']);
+                if ($registro) {
+                    $registro->update([
+                        'x' => $anotacao['x'],
+                        'y' => $anotacao['y'],
+                        'texto' => $anotacao['texto'],
+                    ]);
+                }
+            } else {
+                // Cria nova anotação
+                AnotacaoFoto::create([
+                    'foto_id' => $fotoId,
+                    'x' => $anotacao['x'],
+                    'y' => $anotacao['y'],
+                    'texto' => $anotacao['texto'],
+                ]);
+            }
+        }
+
     }
 }
