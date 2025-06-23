@@ -28,56 +28,57 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo1 as $item)
-                    <figure class="w-full hover:w-">
-                        @php
-                            $fotoExibir = null; // Inicializa como nulo
-                            // Tenta encontrar uma foto com capa
-                            foreach ($item->fotos as $foto) {
-                                if ($foto->capa) {
-                                    $fotoExibir = $foto;
-                                    break; // Encontrou a capa, pode parar
+                    <a href="{{ route('Rocha.show', $item->id) }}">
+                        <figure class="w-full hover:w-">
+                            @php
+                                $fotoExibir = null; // Inicializa como nulo
+                                // Tenta encontrar uma foto com capa
+                                foreach ($item->fotos as $foto) {
+                                    if ($foto->capa) {
+                                        $fotoExibir = $foto;
+                                        break; // Encontrou a capa, pode parar
+                                    }
                                 }
-                            }
 
-                            // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
-                            if (is_null($fotoExibir) && count($item->fotos) > 0) {
-                                $fotoExibir = $item->fotos[0];
-                            }
-                        @endphp
+                                // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
+                                if (is_null($fotoExibir) && count($item->fotos) > 0) {
+                                    $fotoExibir = $item->fotos[0];
+                                }
+                            @endphp
 
-                        @if ($fotoExibir)
-                            {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
-                            <div class="flex">
-                                {{-- <div class="flex">
+                            @if ($fotoExibir)
+                                {{-- Verifica se uma foto foi encontrada para exibir --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @else
-                            {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
-                            <div class="flex">
-                                {{-- <div class="flex">
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @else
+                                {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @endif
-
-                    </figure>
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @endif
+                        </figure>
+                    </a>
                 @endforeach
 
             </div>
@@ -92,51 +93,57 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo2 as $item)
-                    <figure class="w-full ">
-                        @php
-                            $fotoExibir = null; // Inicializa como nulo
-                            // Tenta encontrar uma foto com capa
-                            foreach ($item->fotos as $foto) {
-                                if ($foto->capa) {
-                                    $fotoExibir = $foto;
-                                    break; // Encontrou a capa, pode parar
+                    <a href="{{ route('Rocha.show', $item->id) }}">
+                        <figure class="w-full ">
+                            @php
+                                $fotoExibir = null; // Inicializa como nulo
+                                // Tenta encontrar uma foto com capa
+                                foreach ($item->fotos as $foto) {
+                                    if ($foto->capa) {
+                                        $fotoExibir = $foto;
+                                        break; // Encontrou a capa, pode parar
+                                    }
                                 }
-                            }
 
-                            // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
-                            if (is_null($fotoExibir) && count($item->fotos) > 0) {
-                                $fotoExibir = $item->fotos[0];
-                            }
-                        @endphp
+                                // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
+                                if (is_null($fotoExibir) && count($item->fotos) > 0) {
+                                    $fotoExibir = $item->fotos[0];
+                                }
+                            @endphp
 
-                        @if ($fotoExibir)
-                            {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
-                            <div class="flex">
-                                {{-- <div class="flex">
+                            @if ($fotoExibir)
+                                {{-- Verifica se uma foto foi encontrada para exibir --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @else
-                                {{-- <div class="flex">
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @else
+                                {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @endif
-                    </figure>
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @endif
+                        </figure>
+                    </a>
                 @endforeach
 
             </div>
@@ -151,56 +158,57 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo3 as $item)
-                    <figure class="w-full ">
-                        @php
-                            $fotoExibir = null; // Inicializa como nulo
-                            // Tenta encontrar uma foto com capa
-                            foreach ($item->fotos as $foto) {
-                                if ($foto->capa) {
-                                    $fotoExibir = $foto;
-                                    break; // Encontrou a capa, pode parar
+                    <a href="{{ route('Rocha.show', $item->id) }}">
+                        <figure class="w-full ">
+                            @php
+                                $fotoExibir = null; // Inicializa como nulo
+                                // Tenta encontrar uma foto com capa
+                                foreach ($item->fotos as $foto) {
+                                    if ($foto->capa) {
+                                        $fotoExibir = $foto;
+                                        break; // Encontrou a capa, pode parar
+                                    }
                                 }
-                            }
 
-                            // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
-                            if (is_null($fotoExibir) && count($item->fotos) > 0) {
-                                $fotoExibir = $item->fotos[0];
-                            }
-                        @endphp
+                                // Se nenhuma capa foi encontrada, usa a primeira foto (se existir)
+                                if (is_null($fotoExibir) && count($item->fotos) > 0) {
+                                    $fotoExibir = $item->fotos[0];
+                                }
+                            @endphp
 
-                        @if ($fotoExibir)
-                            {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
-                            <div class="flex">
-                                {{-- <div class="flex">
+                            @if ($fotoExibir)
+                                {{-- Verifica se uma foto foi encontrada para exibir --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem da rocha tal">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @else
-                            {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
-                                src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @else
+                                {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
+                                <img class="object-cover w-full h-[500px] rounded-xl"
+                                    src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
 
-                            <div class="flex">
-                                {{-- <div class="flex">
+                                <div class="flex">
+                                    {{-- <div class="flex">
                                 <img class="" src="/assets/img/Vector.png" alt="curtir">
                                 <img class="" src="/assets/img/Vector (1).png" alt="salvar">
                             </div> --}}
-                                <figcaption>
-                                    <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
-                                        <strong>{{ $item->nome }}</strong>
-                                    </h2>
-                                </figcaption>
-                            </div>
-                        @endif
-                        {{-- <div class="flex">
+                                    <figcaption>
+                                        <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4">
+                                            <strong>{{ $item->nome }}</strong>
+                                        </h2>
+                                    </figcaption>
+                                </div>
+                            @endif
+                            {{-- <div class="flex">
                         <div class="flex">
                             <img class="" src="/assets/img/Vector.png" alt="curtir">
                             <img class="" src="/assets/img/Vector (1).png" alt="salvar">
@@ -209,7 +217,8 @@
                             <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
                         </figcaption>
                     </div> --}}
-                    </figure>
+                        </figure>
+                    </a>
                 @endforeach
             </div>
         </div>

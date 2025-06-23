@@ -24,6 +24,7 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($minerais as $item)
+                <a href="{{ route('minerais.show', $item->id) }}">
                     <figure class="w-full hover:w-">
                         @php
                             $fotoExibir = null; // Inicializa como nulo
@@ -73,14 +74,15 @@
                             </div>
                         @endif
 
-                    </figure>
+                    </figure></a>
                 @endforeach
+
             </div>
             <div>
                 <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
             </div>
 
-            {{-- <figure class="pl-80 pb-20 w-[82%]">
+        {{-- <figure class="pl-80 pb-20 w-[82%]">
         <img src="/assets/img/image (3).png" alt="Imagem da rocha tal">
         <figcaption>
             <h2 class="font-[Arial] text-[30px] text-[#F1EEDD] pt-4"><strong>Rocha tal</strong></h2>
@@ -113,12 +115,18 @@
             </div>
         </figure>
     </div> --}}
+<<<<<<< HEAD
             <div class="flex justify-center">
                 <div class="pagination">
                     {{ $minerais->links() }}
                 </div>
                 <x-rodape_site></x-rodape_site>
         </div>
+=======
+
+        <x-rodape_site></x-rodape_site>
+    </div>
+>>>>>>> 66f2de73c718b24ee86dddb08031ba9cfad3abab
 </body>
 
 </html>

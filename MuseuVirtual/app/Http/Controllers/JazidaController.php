@@ -121,7 +121,7 @@ class JazidaController extends Controller
     }
 
     public function site(){
-        $jazidas = Jazida::with("fotos")->paginate(10);
+        $jazidas = Jazida::with("fotos")->get();
         return view('_Jazidas',compact("jazidas"));
     }
 

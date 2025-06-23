@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref, watch } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const props = defineProps({
   modelValue: String,
@@ -19,79 +19,84 @@ function initTinyMCE() {
   window.tinymce.init({
     selector: `#${editorId}`,
     height: 300,
-    menubar: false,
-    plugins: "lists link image preview visualblocks",
-    toolbar: "undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    menubar: true,
+    plugins: ["lists", "link", "image", "preview", "visualblocks", "advlist", "lists","charmap","anchor","searchreplace","code","fullscreen","insertdatetime","media","table","help","wordcount","autolink"],
+    toolbar: "undo redo | blocks | formatselect | bold italic backcolor| alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
     skin_url: "/tinymce/js/tinymce/skins/ui/oxide",
     content_css: "/tinymce/js/tinymce/skins/content/default/content.css",
     language: "pt_BR",
-    // ATENÇÃO: O arquivo pt_BR.js precisa estar em /tinymce/js/tinymce/langs/ para o idioma funcionar corretamente
     language_url: "/tinymce/js/tinymce/langs/pt_BR.js",
-    // Configuração para upload de imagens
-    images_upload_url: "", // Endpoint para upload de imagens
-    // images_upload_url: "/upload", // Endpoint para upload de imagens
-    // images_upload_handler: function (blobInfo, success, failure) {
-    //   const formData = new FormData();
-    //   formData.append("file", blobInfo.blob(), blobInfo.filename());
 
-    //   const tokenMeta = document.querySelector('meta[name="csrf-token"]');
-    //   const token = tokenMeta ? tokenMeta.getAttribute("content") : "";
+    convert_urls: false,
+    automatic_uploads: true,
+    file_picker_types: "image",
 
-    //   fetch("/upload", {
-    //     method: "POST",
-    //     body: formData,
-    //     headers: {
-    //       "X-CSRF-TOKEN": token,
-    //     },
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error("Erro no upload: " + response.status);
-    //       }
-    //       return response.json();
-    //     })
-    //     .then((data) => {
-    //       console.log("DATA: ", data)
-    //       if (data.location) {
-    //         console.log("DATA LOCATION: ", data.location)
-    //         success(data.location);
-    //       } else if (typeof failure === "function") {
-    //         failure(data.error || "Erro ao fazer upload da imagem");
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log("ERRRORRR: ", error)
-    //       if (typeof failure === "function") {
-    //         console.log(failure);
-    //         failure("Erro ao fazer upload da imagem: " + error);
-    //       }
-    //     });
-    // },
-    automatic_uploads: false,
-    image_upload_tab: false,
-    image_advtab: false,
-    setup(editor) {
-      editorInstance.value = editor;
-      editor.on("init", () => {
-        editor.setContent(props.modelValue || "");
-      });
-      editor.on("change keyup", () => {
-        emit("update:modelValue", editor.getContent());
+    images_upload_handler: (blobInfo, progress) => {
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append("file", blobInfo.blob(), blobInfo.filename());
+
+        const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        const token = tokenMeta ? tokenMeta.getAttribute("content") : "";
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/upload");
+        xhr.setRequestHeader("X-CSRF-TOKEN", token);
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const percent = (e.loaded / e.total) * 100;
+            progress(percent);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status !== 200) {
+            return reject(`Erro no upload: ${xhr.status}`);
+          }
+
+          let json;
+          try {
+            json = JSON.parse(xhr.responseText);
+          } catch (e) {
+            return reject("Resposta inválida do servidor.");
+          }
+
+          if (json.location) {
+            console.log("Imagem enviada com sucesso:", json.location);
+            resolve(json.location); // Importante: precisa ser a URL absoluta
+          } else {
+            reject(json.error || "Erro ao fazer upload da imagem.");
+          }
+        };
+
+        xhr.onerror = () => {
+          reject("Erro na requisição de upload.");
+        };
+
+        xhr.send(formData);
       });
     },
-    file_picker_types: "image",
-    file_picker_callback: function (callback, value, meta) {
-      //verifica a url e se tiver a palavra rocha na url o tipo(variavel opcional da url /image-pick, veja no arquivo web.php) passado para o ImageUploadController será rocha, então quando tentarem procurar imagens, vai aparecer de rochas. 
-      let type_set = window.location.pathname.includes("rocha") ? "rocha" : window.location.pathname.includes("jazida") ? "jazida" : "mineral";
-      console.log(type_set)
+
+    file_picker_callback: (callback, value, meta) => {
       if (meta.filetype === "image") {
-        // Abre o seletor de imagens em uma nova janela
-        window.open(`/image-picker/${type_set}`, "Image Picker", "width=800,height=600");
-        // Função global para receber a URL da imagem escolhida
+        window.open("/image-picker", "Image Picker", "width=800,height=600");
         window.SetUrl = function (url) {
           callback(url, { alt: "" });
         };
       }
+    },
+
+    setup(editor) {
+      editorInstance.value = editor;
+
+      editor.on("init", () => {
+        editor.setContent(props.modelValue || "");
+      });
+
+      editor.on("change keyup", () => {
+        emit("update:modelValue", editor.getContent());
+      });
     },
   });
 }
