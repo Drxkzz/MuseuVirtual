@@ -13,9 +13,9 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <x-menu_site />
-    <div class="w-[1600px] mx-auto">
 
+    <div class="w-[1600px] mx-auto">
+    <x-menu_site />
         <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Jazidas</strong></h1>
         <div class="">
             <img class= "pb-40 w-full " src="/assets/img/image (3).png" alt="Foto da jazida tal">
@@ -77,8 +77,8 @@
                 @endforeach
 
             </div>
-            <div>
-                <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
+            <div class="text-center m-10">
+                <a href="" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851] cursor-pointer ">Ver mais</a>
             </div>
 
         {{-- <figure class="pl-80 pb-20 w-[82%]">

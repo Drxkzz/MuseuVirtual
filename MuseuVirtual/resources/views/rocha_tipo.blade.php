@@ -13,8 +13,8 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <x-menu_site />
     <div class="w-[1600px] mx-auto">
+        <x-menu_site />
          <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>
         @if ($tipo=='1') 
             Ígneas
@@ -30,7 +30,7 @@
         <div class="w-full xl:mx-auto">
             <div class="grid grid-cols-2 gap-8 ">
                 @foreach ($rochastipo as $item)
-                    <figure class="w-full hover:w-">
+                    <a href="{{route("Rocha.show",$item->id)}}"><figure class="w-full hover:w-">
                         @php
                             $fotoExibir = null; // Inicializa como nulo
                             // Tenta encontrar uma foto com capa
@@ -49,7 +49,7 @@
 
                         @if ($fotoExibir)
                             {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
                                 src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem do mineral tal">
                             <div class="flex">
                                 {{-- <div class="flex">
@@ -64,7 +64,7 @@
                             </div>
                         @else
                             {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
                                 src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                             <div class="flex">
                                 {{-- <div class="flex">
@@ -79,7 +79,7 @@
                             </div>
                         @endif
 
-                    </figure>
+                    </figure></a>
                 @endforeach
             </div>
         </div>

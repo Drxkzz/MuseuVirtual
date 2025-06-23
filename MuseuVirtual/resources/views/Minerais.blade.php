@@ -13,8 +13,8 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <x-menu_site />
     <div class="w-[1600px] mx-auto">
+        <x-menu_site />
 
         <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Minerais</strong></h1>
         <div class="">
@@ -44,7 +44,7 @@
 
                         @if ($fotoExibir)
                             {{-- Verifica se uma foto foi encontrada para exibir --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
                                 src="{{ asset('storage/' . $fotoExibir->caminho) }}" alt="Imagem do mineral tal">
                             <div class="flex">
                                 {{-- <div class="flex">
@@ -59,7 +59,7 @@
                             </div>
                         @else
                             {{-- Opcional: Adicionar um placeholder se não houver fotos --}}
-                            <img class="object-cover w-full h-[500px] rounded-xl"
+                            <img class="object-cover w-full h-[500px] rounded-xl hover:scale-95 duration-300"
                                 src="{{ asset('assets/img/placeholder.png') }}" alt="Nenhuma imagem disponível">
                             <div class="flex">
                                 {{-- <div class="flex">
@@ -78,8 +78,8 @@
                 @endforeach
 
             </div>
-            <div>
-                <p class="font-[Arial] text-[25px] text-[#F1EEDD] cursor-pointer text-center pt-10">Ver mais</p>
+            <div class="text-center m-10">
+                <a href="" class="p-1 pl-9 pr-9 rounded-full bg-[#F1EEDD] hover:bg-[#ACB18E] text-[#565851] cursor-pointer ">Ver mais</a>
             </div>
 
         {{-- <figure class="pl-80 pb-20 w-[82%]">
@@ -115,18 +115,12 @@
             </div>
         </figure>
     </div> --}}
-<<<<<<< HEAD
             <div class="flex justify-center">
                 <div class="pagination">
                     {{ $minerais->links() }}
                 </div>
                 <x-rodape_site></x-rodape_site>
         </div>
-=======
-
-        <x-rodape_site></x-rodape_site>
-    </div>
->>>>>>> 66f2de73c718b24ee86dddb08031ba9cfad3abab
 </body>
 
 </html>
