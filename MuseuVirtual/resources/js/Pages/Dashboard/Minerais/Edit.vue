@@ -6,10 +6,8 @@ import { computed, onMounted, ref } from 'vue';
 import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const props = defineProps({
-    mineral: {
-        type: Object,
-        required: true,
-    },
+    mineral: Object,
+    jazidas : Array
 });
 
 const mineral = ref({ ...props.mineral });
@@ -18,6 +16,7 @@ const successMessage = computed(() => page.props?.flash?.success ?? null);
 
 onMounted(() => {
     console.log('Mineral:', mineral.value);
+    console.log('Mineral', mineral.value.jazida_id);
 });
 
 function submitForm() {
@@ -66,6 +65,19 @@ function submitDeleteFoto(id) {
                                     class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 
                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 
                                            rounded-md shadow-sm"></textarea>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="jazida" class="block mt-1 w-full">Jazida Associada</label>
+                                <select v-model="mineral.jazida_id" id="jazida"
+                                    class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300
+                                            focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600
+                                            rounded-md shadow-sm">
+                                    <option value="">Nenhuma jazida associada</option>
+                                    <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">
+                                    {{ jazida.localizacao }}
+                                    </option>
+                                </select>
                             </div>
 
                             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

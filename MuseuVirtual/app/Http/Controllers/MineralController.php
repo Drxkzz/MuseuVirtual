@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Mineral;
+use App\Models\Jazida;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse; // Para type-hinting de retorno
 use Illuminate\Http\JsonResponse; // Para type-hinting de retorno de API
@@ -24,7 +25,10 @@ class MineralController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/Minerais/Create');
+        $jazidas = Jazida::all();
+        return Inertia::render('Dashboard/Minerais/Create', [
+            'jazidas' => $jazidas
+        ]);
     }
 
     /**
@@ -33,9 +37,11 @@ class MineralController extends Controller
     public function store(Request $request)
     {
         $mineral = new Mineral;
+
         $mineral -> nome = $request -> nome;
         $mineral -> descricao = $request -> descricao;
         $mineral -> propriedades = $request -> propriedades;
+        $mineral -> jazida_id = $request -> idJazida;
         $mineral -> save();
         
         if ($request->hasFile('foto')) {
@@ -68,7 +74,12 @@ class MineralController extends Controller
     public function edit($id)
     {
         $mineral = Mineral::with('fotos')->findOrFail($id);
-        return Inertia::render('Dashboard/Minerais/Edit', ['mineral' => $mineral]);
+        $jazidas = Jazida::all();
+
+        return Inertia::render('Dashboard/Minerais/Edit', [
+            'mineral' => $mineral,
+            'jazidas' => $jazidas,
+        ]);
     }
     
 
@@ -96,6 +107,10 @@ class MineralController extends Controller
 
         if ($request->filled('propriedades')) {
             $mineral->propriedades = $request->propriedades;
+        }
+
+        if ($request->filled('jazida_id')) {
+            $mineral->jazida_id = $request->jazida_id;
         }
 
         $mineral->save();
