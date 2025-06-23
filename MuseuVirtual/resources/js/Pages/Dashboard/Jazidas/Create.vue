@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TinyMCEEditor from '@/Components/TinyMCEEditor.vue';
 
 const form = useForm({
   localizacao: '',
@@ -58,8 +59,8 @@ function submit() {
               </div>
 
               <div class="mb-4">
-                <InputLabel for="descricao" value="Descrição" />
-                <TextInput id="descricao" v-model="form.descricao" type="text" class="block mt-1 w-full" required autocomplete="off" />
+                <label for="descricao" class="block font-medium">Descrição</label>
+                <TinyMCEEditor v-model="form.descricao" />
               </div>
 
               <div class="mb-4">
