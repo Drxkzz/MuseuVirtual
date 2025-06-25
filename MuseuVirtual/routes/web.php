@@ -54,4 +54,12 @@ Route::fallback(function() {
     return json_encode("Erro, favor não colocar / como caminho para não gerar conflitos. Obrigado :)");
 });
 
+Route::middleware(['auth','role:admin'])->group(function(){
+    // Route::get('/minerais', [AdminController::class,'index']);
+    // Route::get('/fotos', [AdminController::class,'index']);
+    // Route::get('/rochas', [AdminController::class,'index']);
+    // Route::get('/jazidas', [AdminController::class,'index']);
+    // outras rotas só pra admins
+});
+
 require __DIR__.'/auth.php';
