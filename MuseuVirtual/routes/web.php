@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
 // Rota Jazidas:
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
+Route::get('/api/jazidas', [JazidaController::class, 'apiListJazidas']);
 
 //Rota Minerais:
 Route::resource('/minerais', MineralController::class); 
