@@ -18,6 +18,10 @@ class Fotos extends Model
     public function jazida(){
         return $this->belongsTo(Jazida::class,'idJazida');
     }
+
+        public function anotacoes(){
+        return $this->hasMany(AnotacaoFoto::class, 'foto_id');
+    }
     protected $fillable = [
         'id',
         'idRocha',

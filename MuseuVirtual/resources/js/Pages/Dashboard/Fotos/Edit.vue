@@ -1,163 +1,194 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref, onMounted } from 'vue'
-import { useForm, usePage } from '@inertiajs/vue3'
+import { Head, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    fotos: Object,
-})
+  fotos: Object,
+});
 
-const previewFoto = ref(null)
-const novaFoto = ref(null)
-const cardsFotos = ref([])
-const capaValue = ref(props.fotos.capa)
+const previewFoto = ref(null);
+const capaValue = ref(props.fotos.capa);
 
 const form = useForm({
-    _method: 'put',
-    foto: null,
-    capa: capaValue.value,
-    idRocha: props.fotos.idRocha,
-    idMineral: props.fotos.idMineral,
-    idJazida: props.fotos.idJazida,
-})
+  _method: 'put',
+  foto: null,
+  capa: capaValue.value,
+  idRocha: props.fotos.idRocha,
+  idMineral: props.fotos.idMineral,
+  idJazida: props.fotos.idJazida,
+});
 
 const submit = () => {
-    form.post(route('fotos-update', props.fotos.id), {
-        forceFormData: true,
-    })
-}
+  form.post(route('fotos-update', props.fotos.id), {
+    forceFormData: true,
+  });
+};
 
 const atualizarCardCapa = (e) => {
-    const file = e.target.files[0]
-    if (!file) return
+  const file = e.target.files[0];
+  if (!file) return;
+  form.foto = file;
+  previewFoto.value = URL.createObjectURL(file);
+};
 
-    form.foto = file
-    previewFoto.value = URL.createObjectURL(file)
+// ---------- CONTROLE DE ANOTAÇÕES ----------
 
-    cardsFotos.value = [
-        {
-            src: previewFoto.value,
-            isCapa: form.capa === 1,
-        },
-    ]
-}
+const mostrarModalImagem = ref(false);
+
+const anotacoes = ref(
+  props.fotos.anotacoes?.map(a => ({
+    id: a.id,
+    x: a.x,
+    y: a.y,
+    texto: a.texto,
+    mostrarTexto: true,
+  })) || []
+);
+
+const anotacoesParaExcluir = ref([]);
+
+const imagemRef = ref(null);
+
+const abrirModalImagem = () => {
+  mostrarModalImagem.value = true;
+};
+
+const fecharModalImagem = () => {
+  mostrarModalImagem.value = false;
+};
+
+// Adicionar anotação localmente
+const adicionarAnotacao = (e) => {
+  const bounds = imagemRef.value.getBoundingClientRect();
+  const x = e.clientX - bounds.left;
+  const y = e.clientY - bounds.top;
+  const texto = prompt("Digite o texto da anotação:");
+  if (texto && texto.trim() !== '') {
+    anotacoes.value.push({
+      id: null,
+      x,
+      y,
+      texto: texto.trim(),
+      mostrarTexto: true,
+    });
+  }
+};
+
+// Alternar exibição do texto da anotação
+const toggleAnotacao = (index) => {
+  anotacoes.value[index].mostrarTexto = !anotacoes.value[index].mostrarTexto;
+};
+
+// Editar anotação localmente
+const editarAnotacao = (index) => {
+  const anotacao = anotacoes.value[index];
+  const novoTexto = prompt("Editar anotação:", anotacao.texto);
+  if (novoTexto !== null && novoTexto.trim() !== '') {
+    anotacao.texto = novoTexto.trim();
+  }
+};
+
+// Remover anotacão localmente e marca para exclusão no backend
+const removerAnotacao = (index) => {
+  const anotacao = anotacoes.value[index];
+  if (confirm("Deseja remover esta anotação?")) {
+    if (anotacao.id) {
+      anotacoesParaExcluir.value.push(anotacao.id);
+    }
+    anotacoes.value.splice(index, 1);
+  }
+};
+
+// Salvar todas as alterações no backend
+const salvarAnotacoes = () => {
+  router.post(route('fotos.anotacoes.store', props.fotos.id), {
+    anotacoes: anotacoes.value,
+    deletadas: anotacoesParaExcluir.value,
+  }, {
+    preserveScroll: true,
+    onSuccess: () => {
+      mostrarModalImagem.value = false;
+      anotacoesParaExcluir.value = [];
+      // Opcional: atualizar lista com resposta do backend, se quiser
+    },
+  });
+};
 </script>
 
-
 <template>
-    <AuthenticatedLayout>
-        <Head title="Fotos " />
-        <template #header>
-            <div class="flex justify-between">
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Editar Foto
-                </h2>
-                <a :href="route('jazidas.index')"
-                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Voltar
-                </a>
-            </div>
-        </template>
-        <div class="py-12">
-            <div class="max-w-3xl mx-auto mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Edição de Fotos</h2>
-
-                <div class="mb-4">
-                    <h2>Foto Antiga</h2>
-                    <img :src="`/storage/${props.fotos.caminho}`" alt="Foto da Rocha"
-                        class="h-[144px] w-[128px] object-cover" />
-                </div>
-
-                <form @submit.prevent="submit" enctype="multipart/form-data">
-                    <div class="mb-4">
-                        <label for="foto" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Nova foto (Caso deseje alterar)
-                        </label>
-                        <input type="file" name="foto" id="foto" @change="atualizarCardCapa"
-                            class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:bg-gray-100 file:border-0 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:text-gray-700 file:cursor-pointer hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 dark:hover:file:bg-gray-600" />
-                    </div>
-
-                    <div class="mb-4">
-                        <span class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Usar foto como
-                            capa?</span>
-                        <div class="flex items-center space-x-4">
-                            <label class="flex items-center space-x-2">
-                                <input type="radio" name="capa" value="1" v-model="form.capa" class="text-blue-600" />
-                                <span class="text-gray-700 dark:text-gray-300">Sim</span>
-                            </label>
-                            <label class="flex items-center space-x-2">
-                                <input type="radio" name="capa" value="0" v-model="form.capa" class="text-blue-600" />
-                                <span class="text-gray-700 dark:text-gray-300">Não</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 grid grid-cols-3 gap-4" id="cardsFotos">
-                        <div v-for="(card, index) in cardsFotos" :key="index"
-                            class="card relative border border-gray-300 rounded-lg overflow-hidden">
-                            <img :src="card.src" class="w-full h-full object-cover" />
-                            <div v-if="card.isCapa" class="capa-indicator">Capa</div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ID da Rocha:</label>
-                        <input type="number" name="idRocha" v-model="form.idRocha"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ID do Mineral:</label>
-                        <input type="number" name="idMineral" v-model="form.idMineral"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">ID da Jazida:</label>
-                        <input type="number" name="idJazida" v-model="form.idJazida"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
-
-                    <div class="mt-6">
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 transition ease-in-out duration-150">
-                            Atualizar
-                        </button>
-                    </div>
-                </form>
-            </div>
+  <AuthenticatedLayout>
+    <Head title="Editar Foto" />
+    <div class="py-12">
+      <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-6 rounded shadow">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Edição de Fotos</h2>
+          <button @click="abrirModalImagem" class="bg-blue-600 text-white px-4 py-2 rounded">Anotações</button>
         </div>
-    </AuthenticatedLayout>
+
+        <img :src="previewFoto || `/storage/${props.fotos.caminho}`" class="h-36 w-32 object-cover mb-4" />
+
+        <form @submit.prevent="submit">
+          <input type="file" @change="atualizarCardCapa" class="mb-4" />
+
+          <div class="flex space-x-4 mb-4">
+            <label><input type="radio" value="1" v-model="form.capa" /> Capa</label>
+            <label><input type="radio" value="0" v-model="form.capa" /> Não capa</label>
+          </div>
+
+          <input type="number" v-model="form.idRocha" placeholder="ID Rocha" class="mb-2 w-full" />
+          <input type="number" v-model="form.idMineral" placeholder="ID Mineral" class="mb-2 w-full" />
+          <input type="number" v-model="form.idJazida" placeholder="ID Jazida" class="mb-4 w-full" />
+
+          <button class="bg-indigo-600 text-white px-4 py-2 rounded">Atualizar</button>
+        </form>
+      </div>
+    </div>
+
+    <div v-if="mostrarModalImagem" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <div class="bg-white p-4 rounded w-[90%] max-w-4xl max-h-[90%] overflow-auto relative">
+        <button @click="fecharModalImagem" class="absolute top-2 right-2 text-3xl font-bold">&times;</button>
+        <h3 class="text-lg font-semibold mb-4">Clique na imagem para adicionar informações</h3>
+
+        <div class="relative">
+          <img
+            :src="`/storage/${props.fotos.caminho}`"
+            @click="adicionarAnotacao"
+            ref="imagemRef"
+            class="w-full cursor-crosshair"
+          />
+
+          <div
+            v-for="(anotacao, index) in anotacoes"
+            :key="anotacao.id ?? index"
+            :style="{ top: anotacao.y + 'px', left: anotacao.x + 'px', position: 'absolute' }"
+          >
+            <div
+              @click="toggleAnotacao(index)"
+              class="w-4 h-4 bg-red-600 rounded-full cursor-pointer"
+              title="Clique para mostrar/esconder texto"
+            ></div>
+            <div v-if="anotacao.mostrarTexto" class="bg-white p-2 rounded shadow mt-1 max-w-xs">
+              <p>{{ anotacao.texto }}</p>
+              <div class="flex justify-between text-xs mt-1">
+                <button @click.stop="editarAnotacao(index)" class="text-blue-600 hover:underline">Editar</button>
+                <button @click.stop="removerAnotacao(index)" class="text-red-600 hover:underline">Excluir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 text-right">
+          <button @click="salvarAnotacoes" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>
 
 <style scoped>
-.card {
-    position: relative;
-    border: 2px solid transparent;
-    transition: transform 0.3s ease-in-out, border-color 0.3s;
-    cursor: pointer;
-}
-
-.card:hover img {
-    transform: scale(1.05);
-}
-
-.card.selected {
-    border-color: #4c51bf;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
-}
-
-.capa-indicator {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    background-color: white;
-    color: #1f2937;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+.bg-opacity-50 {
+  backdrop-filter: blur(4px);
 }
 </style>
