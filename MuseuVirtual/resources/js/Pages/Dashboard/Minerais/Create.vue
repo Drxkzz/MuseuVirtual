@@ -8,12 +8,14 @@ const form = reactive({
     nome: '',
     descricao: '',
     propriedades: '',
+    idJazida: '',
     fotos: [],
     capa_nome: ''
 });
 
 const fotoInput = ref(null);
 const previewFotos = ref([]);
+const associarJazida = ref(false);
 
 function handleFileChange(event) {
     const files = Array.from(event.target.files);
@@ -39,11 +41,17 @@ function submitForm() {
     payload.append('nome', form.nome);
     payload.append('descricao', form.descricao);
     payload.append('propriedades', form.propriedades);
+    payload.append('idJazida', form.idJazida);
     form.fotos.forEach(f => payload.append('foto[]', f));
     payload.append('capa_nome', form.capa_nome);
 
     router.post(route('minerais.store'), payload);
 }
+
+const props = defineProps({
+  jazidas: Array
+});
+
 </script>
 
 <template>
@@ -79,6 +87,26 @@ function submitForm() {
                 <input id="propriedades" v-model="form.propriedades" type="text" required class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm" />
               </div>
 
+              <!-- Associar Jazida -->
+              <div class="mb-4">
+                <label for="jazida" class="block font-medium">Associar este mineral á alguma jazida?</label>
+                <div id="switch">
+                  <p>Não</p>
+                  <label class="switch">
+                    <input type="checkbox" v-model="associarJazida">
+                    <span class="slider round"></span>
+                  </label>
+                  <p>Sim</p>
+                </div>
+                <select v-if="associarJazida" v-model="form.idJazida" class="mt-1 block w-full border-gray-300 dark:bg-gray-700 dark:text-white rounded-md shadow-sm">
+                  <option disabled value="">Escolha uma jazida...</option>
+                <option v-for="jazida in props.jazidas" :key="jazida.id" :value="jazida.id">{{ jazida.localizacao }}</option>
+                </select>
+              </div>
+
+           
+
+              <!-- Fotos -->
               <div class="mb-4">
               <label for="foto" class="block font-medium">Fotos do mineral</label>
               <input ref="fotoInput" @change="handleFileChange" type="file" id="foto" multiple class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 file:bg-gray-100 file:border-0 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:text-gray-700 file:cursor-pointer hover:file:bg-gray-200 dark:file:bg-gray-700 dark:file:text-gray-200 dark:hover:file:bg-gray-600" />
@@ -93,7 +121,7 @@ function submitForm() {
               </div>
               <!-- Botão de Envio -->
               <div class="mt-6">
-                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"> Criar Rocha </button>
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"> Criar Mineral </button>
               </div>
             </div>
           </div>
@@ -127,4 +155,73 @@ function submitForm() {
         grid-template-columns: 1fr;
     }
 }
+
+/* O switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+}
+
+#switch { 
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+/* Esconder checkbox padrão*/
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(40px);
+  -ms-transform: translateX(40px);
+  transform: translateX(40px);
+}
+
+.slider.round {
+  border-radius: 15px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 </style>
