@@ -23,6 +23,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/dashboardPublica', function () {
+    return Inertia::render('DashboardPublica');
+})->middleware(['auth', 'verified'])->name('dashboardPublica');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,6 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard/rocha', [RochaController::class, 'index'])->name('rochas.index');
+
 Route::resource('rochas', RochaController::class)->names('Rocha');
 
 Route::resource('/jazidas', JazidaController::class)->middleware(['auth', 'verified']);
@@ -55,11 +60,11 @@ Route::fallback(function() {
 });
 
 Route::middleware(['auth','role:admin'])->group(function(){
-    // Route::get('/minerais', [AdminController::class,'index']);
-    // Route::get('/fotos', [AdminController::class,'index']);
-    // Route::get('/rochas', [AdminController::class,'index']);
-    // Route::get('/jazidas', [AdminController::class,'index']);
-    // outras rotas só pra admins
+    Route::get('/minerais', [AdminController::class,'index']);
+    Route::get('/fotos', [AdminController::class,'index']);
+    Route::get('/rochas', [AdminController::class,'index']);
+    Route::get('/jazidas', [AdminController::class,'index']);
+    Route::get('/dashboard', [AdminController::class,'index']);
 });
 
 require __DIR__.'/auth.php';
