@@ -17,9 +17,8 @@ class FotosController extends Controller
      */
     public function index()
     {
-        $fotos = Fotos::with(['rocha','mineral','jazida'])->get();
-        # return view('dashboard.fotos.index', ['fotos' => $fotos]);
-        return Inertia::render('Dashboard/Fotos/Index',['fotos' => $fotos]);
+        $fotos = Fotos::with(['rocha', 'mineral', 'jazida', 'anotacoes'])->get();
+        return Inertia::render('Dashboard/Fotos/Index', ['fotos' => $fotos]);
     }
 
     /**
