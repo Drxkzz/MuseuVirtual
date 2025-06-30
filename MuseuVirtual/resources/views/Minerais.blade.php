@@ -12,9 +12,9 @@
     @endif
 </head>
 
-<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
+<body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% xl:px-32">
     <x-menu_site />
-    <div class="w-[1600px] mx-auto">
+    <div class="w-100 mx-auto sm:px-10">
 
         <h1 class="font-[Arial] text-[50px]  text-[#F1EEDD] pb-6 pt-16"><strong>Minerais</strong></h1>
         <div class="">
@@ -22,7 +22,7 @@
         </div>
 
         <div class="w-full xl:mx-auto">
-            <div class="grid grid-cols-2 gap-8 ">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
                 @foreach ($minerais as $item)
                 <a href="{{ route('minerais.show', $item->id) }}">
                     <figure class="w-full hover:w-">

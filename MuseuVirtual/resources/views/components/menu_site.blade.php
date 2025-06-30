@@ -13,7 +13,7 @@
     }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
         #btn-mobile {
             display: block;
         }
@@ -91,9 +91,9 @@
     }
 </style>
 <header id="header" >
-    <nav id="nav" class="flex"> 
+    <nav id="nav" class="block"> 
         {{-- justify-center no nav --}}
-        <div id="div" class="2xl:w-[100%] xl:w-[80%] lg:w-[60%] md:w-[40%] sm:w-[20%] rounded-full mt-6 ">
+        <div id="div" class=" rounded-full mt-6 ">
             <button aria-label="Abrir menu" id="btn-mobile" aria-controls="menu" aria-haspopup="true" aria-expanded="false"
                 class="hidden text-[#565851]">Menu
                 <span id="hamburguer"></span>
