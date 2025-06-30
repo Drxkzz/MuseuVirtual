@@ -12,7 +12,9 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20% ">
-    <x-menu_site></x-menu_site>
+    <div class="w-[1600px] mx-auto" >
+        <x-menu_site></x-menu_site>
+    </div>
     <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
     <h2 class="text-center text-[20px] font-[arial] text-[#F1EEDD]">Bem-vindo ao Museu Virtual das Rochas, um <br>espaço
         interativo e educativo dedicado à incrível<br> diversidade geológica da nossa região. </h2>
