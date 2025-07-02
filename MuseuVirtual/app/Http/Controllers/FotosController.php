@@ -79,7 +79,7 @@ class FotosController extends Controller
 
         }
         if (! in_array($request->tipo, ['1','2','3'])){
-            return redirect()->route('fotos-index')->with('success', 'Fotos enviadas com sucesso!');
+            return redirect()->route('fotos.index')->with('success', 'Fotos enviadas com sucesso!');
         }
     }
 

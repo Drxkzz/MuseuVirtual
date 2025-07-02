@@ -7,6 +7,7 @@ use App\Http\Controllers\MineralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RochaController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,11 +61,11 @@ Route::fallback(function() {
 });
 
 Route::middleware(['auth','role:admin'])->group(function(){
-    Route::get('/minerais', [AdminController::class,'index']);
-    Route::get('/fotos', [AdminController::class,'index']);
-    Route::get('/rochas', [AdminController::class,'index']);
-    Route::get('/jazidas', [AdminController::class,'index']);
-    Route::get('/dashboard', [AdminController::class,'index']);
+    Route::get('/dashboard', [AdminController::class,'index'])->name('dashboard');
+    Route::get('/rochas', [RochaController::class,'index'])->name('rochas.index');
+    Route::get('/fotos', [FotosController::class,'index'])->name('fotos.index');
+    Route::get('/jazidas', [JazidaController::class,'index'])->name('jazidas.index');
+    Route::get('/minerais', [MineralController::class,'index'])->name('minerais.index');
 });
 
 require __DIR__.'/auth.php';

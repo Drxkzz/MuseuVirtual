@@ -12,4 +12,3 @@ class RolesSeeder extends Seeder
         Role::firstOrCreate(['name' => 'admin']);
     }
 }
-

@@ -60,7 +60,7 @@ class RochaController extends Controller
         }
         // termina aqui ---------------------------------------------------------------------
 
-        return redirect()->route('Rocha.index')->with('success', 'Rocha criada com sucesso!');
+        return redirect()->route('rochas.index')->with('success', 'Rocha criada com sucesso!');
     }
 
 
@@ -117,7 +117,7 @@ class RochaController extends Controller
 
         $rocha->save();
 
-        return redirect()->route('Rocha.index')->with('success', 'Rocha atualizada com sucesso!');
+        return redirect()->route('rochas.index')->with('success', 'Rocha atualizada com sucesso!');
     }
 
 
@@ -134,7 +134,7 @@ class RochaController extends Controller
         $rocha->delete();
         $rochas = Rocha::paginate(10);  // 10 rochas por página
 
-        return redirect()->route('Rocha.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
+        return redirect()->route('rochas.index', 'rochas')->with('success', 'Rocha deletada com sucesso!');
     }
 
     public function apiListRocha(){
