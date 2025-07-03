@@ -12,7 +12,7 @@
 </head>
 
 <body class="bg-gradient-to-b from-[#ACB18E] from-0.5% via-[#73785C] via-5% to-[#363C27] to-20%">
-    <div class="w-100 mx-auto" >
+    <div class="w-100 mx-auto 2xl:mx-80" >
         <x-menu_site></x-menu_site>
     </div>
     <h1 class="font-[arial] pt-40 font-bold text-[80px] text-center text-[#F1EEDD]">Museu Virtual</h1>
